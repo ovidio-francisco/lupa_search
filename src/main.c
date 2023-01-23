@@ -31,7 +31,9 @@ int main() {
 
 	init();
 
-	char* str = "ai helo aa";
+	/* char* str = "€pâ ai helo aa❤️ℤ😻"; */
+	char* str = "€pâ ai helo aa❤️";
+	/* char* str = "€pâ ai helo aa"; */
 	int t = strlen(str);
 	char str2[t];
 
