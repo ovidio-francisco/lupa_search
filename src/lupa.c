@@ -47,7 +47,6 @@ void init() {
 		}
 		if (c>=240) {
 			i+=3;
-			/* quando não acha, tem que reconstruir */
 		}
 
 	}
@@ -69,32 +68,76 @@ void clean(char* s, char* d) {
 		if (c<=127) {
 			idx = c;
 			printf("1\n");
+		
+			printf("--> idx = %d c = %c\n", idx, valids[idx]);
+			unsigned char valid = valids[idx];
+
+			if (valid <= 127) {
+				d[j++] = valid;
+			}
 		}
 
 		if (c>=192 && c<224) {
 			idx = chain2(s[i], s[i+1]);
 			printf("2\n");
+
+	
+			printf("--> idx = %d c = %c\n", idx, valids[idx]);
+			unsigned char valid = valids[idx];
+
+			if (valid <= 127) {
+				d[j++] = valid;
+			}
+			else {
+				d[j++] = s[i];
+				d[j++] = s[i+1];
+			}
 			i++;
+	
 		}  
 		
 		if (c>=224 && c<240) {
 			idx = chain3(accenteds[i], accenteds[i+1], accenteds[i+2]);
 			printf("3\n");
+
+
+			printf("--> idx = %d c = %c\n", idx, valids[idx]);
+			unsigned char valid = valids[idx];
+
+			if (valid <= 127) {
+				printf("Valid %d\n", valid);
+				d[j++] = valid;
+			}
+			else {
+				printf("Invalid %d\n", valid);
+				d[j++] = s[i];
+				d[j++] = s[i+1];
+				d[j++] = s[i+2];
+			}
 			i+=2;
 		}
 
 		if (c>=240) {
 			printf("4\n");
+			/* quando não acha, tem que reconstruir */
+
+
+			printf("--> idx = %d c = %c\n", idx, valids[idx]);
+			unsigned char valid = valids[idx];
+
+			if (valid <= 127) {
+				d[j++] = valid;
+			}
+			else {
+				d[j++] = s[i];
+				d[j++] = s[i+1];
+				d[j++] = s[i+2];
+				d[j++] = s[i+3];
+			}
 			i+=3;
 		}
 
 
-		printf("--> idx = %d c = %c\n", idx, valids[idx]);
-		char valid = valids[idx];
-
-		if (valid <= 127) {
-			d[j++] = valid;
-		}
 
 	} while(s[i++]);
 
