@@ -5,9 +5,9 @@ void   init();
 double lupa(char* s1, char* s2);
 void   clean(char* s, char* d);
 
-int chain2(unsigned char c1, unsigned char c2);
-int chain3(unsigned char c1, unsigned char c2, unsigned char c3);
-
-char unchain(int i, int part);
+/* int chain2(unsigned char c1, unsigned char c2);
+ * int chain3(unsigned char c1, unsigned char c2, unsigned char c3);
+ * 
+ * char unchain(int i, int part); */
 
 #endif

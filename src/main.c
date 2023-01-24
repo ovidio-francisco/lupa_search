@@ -31,6 +31,8 @@ int main() {
 
 	init();
 
+
+
 	char* str = "€pâ ai helo aa❤️ℤ😻";
 	/* char* str = "€pâ ai helo aa❤️"; */
 	/* char* str = "€pâ ai helo aa"; */
@@ -44,6 +46,7 @@ int main() {
 	/* for(int c=0; c<127; c++) {
 	 *     printf("c = '%c'\n", c);
 	 * } */
+
 }
 
 
