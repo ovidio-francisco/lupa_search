@@ -5,10 +5,8 @@
 
 #define MAX_CHARS 16777216
 
-static char* accenteds        = "€âãäáàêẽëéèîĩïíìôõöóòûũüúùyŷỹÿýỳç";
-static char* unaccenteds      = "EAAAAAEEEEEIIIIIOOOOOUUUUUYYYYYYC"; 
-static char* ascii_replaceble = "aeiouy.,:;!@?-";
-static char* ascii_aimed      = "AEIOUY        ";
+static char* accenteds   = "€âãäáàêẽëéèîĩïíìôõöóòûũüúùyŷỹÿýỳç.,:;!@?-";
+static char* unaccenteds = "EAAAAAEEEEEIIIIIOOOOOUUUUUYYYYYYC        "; 
 
 static char  valids[MAX_CHARS];
 
@@ -29,10 +27,10 @@ void init() {
 		valids[i] = i;
 	}
 
-	for(int i=0; i<strlen(ascii_replaceble); i++) {
-		valids[ascii_replaceble[i]] = ascii_aimed[i];
+	for(char l='a'; l<'z'; l++) {
+		valids[l] = l - 32;
 	}
-	
+
 	for(int i=0; i<strlen(accenteds); i++) {
 		unsigned char c = accenteds[i];
 		int idx;
@@ -61,21 +59,15 @@ void init() {
 
 void clean(char* s, char* d) {
 
-	int i=0;
-	int j=0;
+	int i=0, j=0, idx=0;
 	unsigned char c;
-	int idx=0;
 
 	do {
 		c = s[i];
 
 		if (c<=127) {
-			idx = c;
-			unsigned char valid = valids[idx];
-
-			if (valid <= 127) {
-				d[j++] = valid;
-			}
+			d[j++] = valids[c];
+			continue;
 		}
 
 		if (c>=192 && c<224) {
@@ -90,6 +82,7 @@ void clean(char* s, char* d) {
 				d[j++] = s[i+1];
 			}
 			i++;
+			continue;
 		}  
 		
 		if (c>=224 && c<240) {
@@ -105,6 +98,7 @@ void clean(char* s, char* d) {
 				d[j++] = s[i+2];
 			}
 			i+=2;
+			continue;
 		}
 
 		if (c>=240) {
@@ -120,9 +114,8 @@ void clean(char* s, char* d) {
 				d[j++] = s[i+3];
 			}
 			i+=3;
+			continue;
 		}
-
-
 
 	} while(s[i++]);
 
@@ -159,116 +152,3 @@ static int chain3(unsigned char c1, unsigned char c2, unsigned char c3) {
 
 
 
-
-
-
-
-
-/* ❤️ , ℤ or 😻  */
-
-
-
-
-
-
-
-/* void clean(char* s, char* d) {
- *     int t = strlen(s);
- * 
- *     int i=0;
- *     unsigned char c;
- *     int idx=0;
- * 
- *     do {
- *         c = s[i];
- * 
- *         if (c<=127) {
- *             idx = c;
- *             continue;
- *         }
- * 
- *         if (c>=192 && c<224) {
- *             idx = chain2(s[i], s[i+1]);
- *             i++;
- *             continue;
- *         }
- * 
- *         d[i] = valids[idx];
- * 
- *     } while(s[i++]);
- * 
- *     d[i] = 0;
- * } */
-
-
-
-
-
-
-/*     for(int i=0; i<strlen(accenteds); i++) {
- *         unsigned char c = accenteds[i];
- *         printf("d = %u", c);
- *         if (c<=127)          printf("←   1");
- *         if (c>=192 && c<224) printf("<-- 2 %u", chain2(accenteds[i], accenteds[i+1]));
- *         if (c>=224 && c<240) printf("<== 3 %u", chain3(accenteds[i], accenteds[i+1], accenteds[i+2]));
- *         if (c>=240)          printf("<++ 4");
- *         printf("\n");
- * 
- *         valids[c] = unaccenteds[i];
- *     } */
-
-
-
-
-
-
-
-	/* for(int i=0; i<strlen(accenteds); i++) {
-	 *     printf("i=%d, ac=%d char='%c'", i, (unsigned char)accenteds[i], accenteds[i]);
-	 *     if ((unsigned char)accenteds[i] == 195) {
-	 *         printf(" <--");
-	 *     }
-	 *     printf("\n");
-	 * }  */
-
-
-
-/* void clean(char* s, char* d) {
- *     int t = strlen(s);
- * 
- *     int i=0;
- * 
- *     do {
- * 
- *         d[i] = valids[s[i]];
- * 
- *     } while(s[i++]);
- * 
- *     d[i] = 0;
- * } */
-
-
-
-
-/* char unchain(int i, int part) {
- *     int  mask = 0;
- *     int  result = 0;
- * 
- *     switch (part) {
- *         case 0: mask = 0b00000000000000000000000011111111; break;
- *         case 1: mask = 0b00000000000000001111111100000000; break;
- *         case 2: mask = 0b00000000111111110000000000000000; break;
- *         case 3: mask = 0b11111111000000000000000000000000; break;
- *     }
- * 
- *     result =  i & mask;
- *     
- *     switch (part) {
- *         case 0: ; break;
- *         case 1: result = result >>  8; break;
- *         case 2: result = result >> 16; break;
- *         case 3: result = result >> 24; break;
- *     }
- * 
- *     return result;
- * } */
