@@ -102,17 +102,11 @@ void clean(char* s, char* d) {
 		}
 
 		if (c>=240) {
-			unsigned char valid = valids[idx];
+			d[j++] = s[i];
+			d[j++] = s[i+1];
+			d[j++] = s[i+2];
+			d[j++] = s[i+3];
 
-			if (valid <= 127) {
-				d[j++] = valid;
-			}
-			else {
-				d[j++] = s[i];
-				d[j++] = s[i+1];
-				d[j++] = s[i+2];
-				d[j++] = s[i+3];
-			}
 			i+=3;
 			continue;
 		}
@@ -127,6 +121,9 @@ double lupa(char* s1, char* s2) {
 	return 0;
 }
 
+static int getUTF8(char* s, char* d, int i, int j) {
+
+}
 
 static int chain2(unsigned char c1, unsigned char c2) {
 	int result = c1;

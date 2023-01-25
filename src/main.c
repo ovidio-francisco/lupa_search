@@ -13,7 +13,7 @@ int main() {
 
 
 	/* char* str = "€pâ ai helo aa❤️ ℤ😻"; */
-	char* str = "€pâ ai helo aa❤️ ℤr 😻";
+	char* str = "€pâ ai helo aa❤️ ℤrí😻";
 	int t = strlen(str);
 	char str2[t];
 
