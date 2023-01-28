@@ -3,10 +3,10 @@
 #include "lupa.h"
 
 
-#define MAX_CHARS 16777216
+#define MAX_CHARS 16777216 // 2^24 
 
-static char* accenteds   = "€âãäáàêẽëéèîĩïíìôõöóòûũüúùyŷỹÿýỳç.,:;!@?-";
-static char* unaccenteds = "EAAAAAEEEEEIIIIIOOOOOUUUUUYYYYYYC        "; 
+static char* accenteds   = "âãäáàêẽëéèîĩïíìôõöóòûũüúùyŷỹÿýỳçℤÂÃÄÁÀÊẼËÉÈÎĨÏÍÌÔÕÖÓÒÛŨÜÚÙYŶỸŸÝỲÇ.,:;!@?-€";
+static char* unaccenteds = "AAAAAEEEEEIIIIIOOOOOUUUUUIIIIIICZAAAAAEEEEEIIIIIOOOOOUUUUUIIIIIIC        E"; 
 
 static char  valids[MAX_CHARS];
 
@@ -31,27 +31,29 @@ void init() {
 		valids[l] = l - 32;
 	}
 
+	int j=0;
 	for(int i=0; i<strlen(accenteds); i++) {
 		unsigned char c = accenteds[i];
 		int idx;
 		
 		if (c<=127) {
 			idx = c;
-			valids[idx] = unaccenteds[i];
+			valids[idx] = unaccenteds[j];
 		}
 		if (c>=192 && c<224) {
 			idx = chain2(accenteds[i], accenteds[i+1]);
-			valids[idx] = unaccenteds[i];
+			valids[idx] = unaccenteds[j];
 			i++;
 		}
 		if (c>=224 && c<240) {
 			idx = chain3(accenteds[i], accenteds[i+1], accenteds[i+2]);
-			valids[idx] = unaccenteds[i];
+			valids[idx] = unaccenteds[j];
 			i+=2;
 		}
 		if (c>=240) {
 			i+=3;
 		}
+		j++;
 	}
 }
 
@@ -67,6 +69,7 @@ void clean(char* s, char* d) {
 
 		if (c<=127) {
 			d[j++] = valids[c];
+			i++;
 			continue;
 		}
 
@@ -76,42 +79,38 @@ void clean(char* s, char* d) {
 
 			if (valid <= 127) {
 				d[j++] = valid;
+				i+=2;
 			}
 			else {
-				d[j++] = s[i];
-				d[j++] = s[i+1];
+				d[j++] = s[i++];
+				d[j++] = s[i++];
 			}
-			i++;
 			continue;
 		}  
 		
 		if (c>=224 && c<240) {
-			idx = chain3(accenteds[i], accenteds[i+1], accenteds[i+2]);
+			idx = chain3(s[i], s[i+1], s[i+2]);
 			unsigned char valid = valids[idx];
 
 			if (valid <= 127) {
 				d[j++] = valid;
 			}
 			else {
-				d[j++] = s[i];
-				d[j++] = s[i+1];
-				d[j++] = s[i+2];
+				copy(&s[i], &d[j], 3);
+				j+=3;
 			}
-			i+=2;
-			continue;
-		}
-
-		if (c>=240) {
-			d[j++] = s[i];
-			d[j++] = s[i+1];
-			d[j++] = s[i+2];
-			d[j++] = s[i+3];
-
 			i+=3;
 			continue;
 		}
 
-	} while(s[i++]);
+		if (c>=240) {
+			copy(&s[i], &d[j], 4);
+			j+=4;
+			i+=4;
+			continue;
+		}
+
+	} while(s[i]);
 
 	d[j] = 0;
 } 
@@ -121,8 +120,11 @@ double lupa(char* s1, char* s2) {
 	return 0;
 }
 
-static int getUTF8(char* s, char* d, int i, int j) {
-
+void copy(const char* s, char* d, int count) {
+	while(count-- && (*d = *s)) {
+		s++;
+		d++;
+	}
 }
 
 static int chain2(unsigned char c1, unsigned char c2) {
