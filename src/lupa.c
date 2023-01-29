@@ -5,8 +5,8 @@
 
 #define MAX_CHARS 16777216 // 2^24 
 
-static char* accenteds   = "âãäáàêẽëéèîĩïíìôõöóòûũüúùyŷỹÿýỳçℤÂÃÄÁÀÊẼËÉÈÎĨÏÍÌÔÕÖÓÒÛŨÜÚÙYŶỸŸÝỲÇ.,:;!@?-€";
-static char* unaccenteds = "AAAAAEEEEEIIIIIOOOOOUUUUUIIIIIICZAAAAAEEEEEIIIIIOOOOOUUUUUIIIIIIC        E"; 
+static char* accenteds   = ACCENTEDS;
+static char* unaccenteds = UNACCENTEDS;
 
 static char  valids[MAX_CHARS];
 

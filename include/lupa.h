@@ -1,6 +1,9 @@
 #ifndef LUPA_H
 #define LUPA_H
 
+#define ACCENTEDS "âãäáàêẽëéèîĩïíìôõöóòûũüúùyŷỹÿýỳçℤÂÃÄÁÀÊẼËÉÈÎĨÏÍÌÔÕÖÓÒÛŨÜÚÙYŶỸŸÝỲÇ.,:;!@?-€";
+#define UNACCENTEDS "AAAAAEEEEEIIIIIOOOOOUUUUUIIIIIICZAAAAAEEEEEIIIIIOOOOOUUUUUIIIIIIC        E"; 
+
 void   init();
 double lupa(char* s1, char* s2);
 void   clean(char* s, char* d);
