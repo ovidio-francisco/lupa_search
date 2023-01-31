@@ -22,13 +22,6 @@ int main() {
 	clean(str, str2);
 	printf("str = %s\n", str);
 	printf("str2= %s\n", str2);
-	
-	/* char c[] = "ÁáÉé"; */
-	/* char c[] = "áÁℤ€";
-	 * for(int i=0; i<strlen(c); i++) {
-	 *     unsigned char d = c[i];
-	 *     printf("code = %d\n",d);
-	 * }  */
 }
 
 

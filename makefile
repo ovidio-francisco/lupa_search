@@ -1,27 +1,41 @@
 CC=gcc
 CFLAGS=-I./include
 SRC=./src/
-BIN=./bin/
-INCLUDE=./include/
+BUILD=./build/
+COMPILE=$(CC) $(CFLAGS)
 
 
-tests: tests.o lupa.o
-	$(CC) tests.o lupa.o -o $(BIN)tests
-
-tests.o: $(SRC)/tests.c
-	$(CC) $(CFLAGS) -c $(SRC)/tests.c -o tests.o
+TESTS=$(BUILD)tests
+MAIN=$(BUILD)main
 
 
-lupa: main.o lupa.o
-	$(CC) main.o lupa.o -o $(BIN)lupa
+all: main tests
 
-main.o: $(SRC)/main.c 
-	$(CC) $(CFLAGS) -c $(SRC)/main.c -o main.o
+tests: $(SRC)tests.c $(BUILD)lupa.o
+	$(COMPILE) $^ -o $(TESTS)
 
-lupa.o: $(SRC)/lupa.c 
-	$(CC) $(CFLAGS) -c src/lupa.c -o lupa.o
+main: $(SRC)main.c $(BUILD)lupa.o
+	$(COMPILE) $^ -o $(MAIN)
+
+
+$(BUILD)lupa.o: $(SRC)lupa.c  build
+	$(COMPILE) -c $(SRC)lupa.c -o $(BUILD)lupa.o
+
+build:
+	mkdir -p $(BUILD)
 
 clean:
-	rm -rvf lupa tests *.o
+	rm -rvf $(TESTS) $(MAIN) $(BUILD)*.o $(BUILD)
+
+check:
+	$(TESTS)
+
+run:
+	$(MAIN)
+
+.PHONY: build clean check run
+
+
+
 
 
