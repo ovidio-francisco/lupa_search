@@ -9,9 +9,9 @@ TESTS=$(BUILD)tests
 MAIN=$(BUILD)main
 
 
-all: main tests
+all: main unitytests
 
-tests: $(SRC)tests.c $(BUILD)lupa.o
+unitytests: $(SRC)tests.c $(BUILD)lupa.o
 	$(COMPILE) $^ -o $(TESTS)
 
 main: $(SRC)main.c $(BUILD)lupa.o
@@ -27,7 +27,7 @@ build:
 clean:
 	rm -rvf $(TESTS) $(MAIN) $(BUILD)*.o $(BUILD)
 
-check:
+test:
 	$(TESTS)
 
 run:

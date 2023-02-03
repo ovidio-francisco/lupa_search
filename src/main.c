@@ -12,16 +12,17 @@ int main() {
 
 	init();
 
+	char input[200];
+	char result[200];
 
-	/* char* str = "€pâ ai helo aa❤️ ℤ😻"; */
-	char* str = "á€€pâÁ àái helo aa❤️ ℤrí😻";
-	/* char* str = "âãäáàêẽëéèîĩïíìôõöóòûũüúùyŷỹÿýỳçℤÂÃÄÁÀÊẼËÉÈÎĨÏÍÌÔÕÖÓÒÛŨÜÚÙYŶỸŸÝỲÇ.,:;!@?-€"; */
-	int t = strlen(str);
-	char str2[t];
+	printf("Input something: ");
+	scanf("%[^\n]s", input);
 
-	clean(str, str2);
-	printf("str = %s\n", str);
-	printf("str2= %s\n", str2);
+
+	clean(input, result);
+	printf("\n");
+	printf("Input  = %s\n", input);
+	printf("Result = %s\n", result);
 }
 
 
