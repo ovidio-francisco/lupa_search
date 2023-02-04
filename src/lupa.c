@@ -58,7 +58,7 @@ void init() {
 }
 
 
-void clean(char* s, char* d) {
+char* clean(char* s, char* d) {
 
 	int i=0, j=0, jmp=0, idx=0;
 	unsigned char c;
@@ -89,8 +89,12 @@ void clean(char* s, char* d) {
 		}
 
 		if (valid <= 127) {
-			d[j++] = valid;
 			i+=jmp;
+			if (j>0 && valid == d[j-1]) {
+				continue;
+			}
+			
+			d[j++] = valid;
 		} 
 		else {
 			do {
@@ -99,9 +103,31 @@ void clean(char* s, char* d) {
 		}
 
 	} while(s[i]);
+		
 
 	d[j] = 0;
+
+	d = trim(d, j);
+
+	return d;
 } 
+
+
+char*  trim(char* str, int end) {
+
+	while(str[end-1] == ' ') {
+		end--;
+	}
+
+	str[end] = 0;
+	
+	while(*str == ' ') {
+		str++;
+	} 
+
+	return str;
+}
+
 
 
 double lupa(char* s1, char* s2) {

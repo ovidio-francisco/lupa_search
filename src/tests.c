@@ -10,14 +10,14 @@ int test_clean(char* original, char* expected, char* msg) {
 
 	count++;
 
-	char  cleaned[strlen(original)];
-	clean(original, cleaned);
+	char  buffer[strlen(original)];
+	char* cleaned = clean(original, buffer);
 
 	int result = strcmp(expected, cleaned) == 0;
 
-	/* printf("Original = %s\n", original);
-	 * printf("Result   = %s\n", cleaned);
-	 * printf("Expected = %s\n", expected); */
+	/* printf("Original = '%s'\n", original);
+	 * printf("Result   = '%s'\n", cleaned);
+	 * printf("Expected = '%s'\n", expected);    */
 
 	if (result) {
 		printf("👍 %s\n\n", msg);
@@ -39,13 +39,17 @@ int main() {
 	init();
 
 	test_clean("abcdABCD", "ABCDABCD", "Just ASCII chars");
-	test_clean(EXTENDED, REDUCED, "All exchanges");
+	test_clean(EXTENDED, "AEIOUICZAEIOUIC E", "All exchanges");
 	test_clean("Aí José coração vovô", "AI JOSE CORACAO VOVO", "Basic accents");
-	test_clean("abcd.efgh@gmail.com", "ABCD EFGH GMAIL COM", "Pontuation to space");
+	test_clean("abcd.efgh@gmail.com", "ABCD EFGH GMAIL COM", "Ponctuation to space"); 
+	test_clean("....points.and spaces;;;", "POINTS AND SPACES", "Ponctuation and trim"); 
+	test_clean("hhello   worrrrllddd", "HELO WORLD", "Duplicates"); 
+	test_clean("   trim   trim  ", "TRIM TRIM", "Trim");
 	test_clean("€ℤ", "EZ", "Symbols to letters");
-	test_clean("❤️ 😻", "❤️ 😻", "Basic emojis");
+	test_clean("❤️ 😻", "❤️ 😻", "Basic emojis"); 
 
-	printf("\n%d/%d - ", count, passeds);
+
+	printf("\n%d/%d - ", passeds, count);
 
 	if (passeds == count) {
 		printf("That is what we expected 🚀\n\n");
