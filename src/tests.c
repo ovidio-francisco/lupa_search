@@ -41,6 +41,7 @@ int main() {
 	test_clean("abcdABCD", "ABCDABCD", "Just ASCII chars");
 	test_clean(EXTENDED, REDUCED, "All exchanges");
 	test_clean("Aí José coração vovô", "AI JOSE CORACAO VOVO", "Basic accents");
+	test_clean("abcd.efgh@gmail.com", "ABCD EFGH GMAIL COM", "Pontuation to space");
 	test_clean("€ℤ", "EZ", "Symbols to letters");
 	test_clean("❤️ 😻", "❤️ 😻", "Basic emojis");
 
@@ -52,7 +53,7 @@ int main() {
 	else {
 		printf("You disappointed me 😟\n\n");
 	}
-
-
 }
+
+
 

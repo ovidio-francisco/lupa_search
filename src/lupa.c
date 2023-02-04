@@ -58,50 +58,45 @@ void init() {
 }
 
 
-
 void clean(char* s, char* d) {
 
-	int i=0, j=0, idx=0;
+	int i=0, j=0, jmp=0, idx=0;
 	unsigned char c;
 	unsigned char valid;
-	int e=0;
 
 	do {
 		c = s[i];
-		e=0;
+		jmp=0;
 		valid = 255;
 
 		if (c<=127) {
 			valid = valids[c];
-			e=1;
+			jmp=1;
 		}
 		else {
 			if (c>=192 && c<224) {
 				idx = chain2(s[i], s[i+1]);
 				valid = valids[idx];
-				e=2;
+				jmp=2;
 			}  
 			else {
 				if (c>=224 && c<240) {
 					idx = chain3(s[i], s[i+1], s[i+2]);
 					valid = valids[idx];
-					e=3;
+					jmp=3;
 				}
 			}
 		}
 
-
 		if (valid <= 127) {
 			d[j++] = valid;
-			i+=e;
+			i+=jmp;
 		} 
 		else {
 			do {
-				/* printf("→ %u\n", (unsigned char)s[i]); */
 				d[j++] = s[i++];
-			}while((unsigned char)s[i] < 192 && (unsigned char)s[i] >= 127);
+			}while((unsigned char)s[i] >= 127 && (unsigned char)s[i] < 192);
 		}
-
 
 	} while(s[i]);
 
