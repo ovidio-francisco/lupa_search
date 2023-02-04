@@ -19,7 +19,7 @@ int main() {
 	scanf("%[^\n]s", input);
 
 
-	reduce(input, result);
+	clean(input, result);
 	printf("\n");
 	printf("Input  = %s\n", input);
 	printf("Result = %s\n", result);

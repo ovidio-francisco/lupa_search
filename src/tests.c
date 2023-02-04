@@ -11,7 +11,7 @@ int test_clean(char* original, char* expected, char* msg) {
 	count++;
 
 	char  cleaned[strlen(original)];
-	reduce(original, cleaned);
+	clean(original, cleaned);
 
 	int result = strcmp(expected, cleaned) == 0;
 
@@ -20,11 +20,11 @@ int test_clean(char* original, char* expected, char* msg) {
 	 * printf("Expected = %s\n", expected); */
 
 	if (result) {
-		printf("👍 %s : Was passed\n\n", msg);
+		printf("👍 %s\n\n", msg);
 		passeds++;
 	}
 	else {
-		printf("❌ %s : Something wrong\n\n", msg);
+		printf("❌ %s\n\n", msg);
 	}
 
 	return result;
@@ -38,6 +38,7 @@ int main() {
 
 	init();
 
+	test_clean("abcdABCD", "ABCDABCD", "Just ASCII chars");
 	test_clean(EXTENDED, REDUCED, "All exchanges");
 	test_clean("Aí José coração vovô", "AI JOSE CORACAO VOVO", "Basic accents");
 	test_clean("€ℤ", "EZ", "Symbols to letters");

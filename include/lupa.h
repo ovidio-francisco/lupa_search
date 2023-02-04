@@ -6,7 +6,7 @@
 
 void   init();
 double lupa(char* s1, char* s2);
-void   reduce(char* s, char* d);
+void   clean(char* s, char* d);
 
 void copy(const char* s, char* d, int count);
 
