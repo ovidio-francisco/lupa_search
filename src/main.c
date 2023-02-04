@@ -19,10 +19,10 @@ int main() {
 	scanf("%[^\n]s", input);
 
 
-	clean(input, result);
+	reduce(input, result);
 	printf("\n");
 	printf("Input  = %s\n", input);
 	printf("Result = %s\n", result);
 }
 
-
+/* https://www.geeksforgeeks.org/taking-string-input-space-c-3-different-methods/ */

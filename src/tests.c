@@ -1,7 +1,35 @@
 #include <stdio.h>
 #include <string.h>
 #include "lupa.h"
-#include "test.h"
+#include "tests.h"
+
+int count = 0;
+int passeds = 0;
+
+int test_clean(char* original, char* expected, char* msg) {
+
+	count++;
+
+	char  cleaned[strlen(original)];
+	reduce(original, cleaned);
+
+	int result = strcmp(expected, cleaned) == 0;
+
+	/* printf("Original = %s\n", original);
+	 * printf("Result   = %s\n", cleaned);
+	 * printf("Expected = %s\n", expected); */
+
+	if (result) {
+		printf("👍 %s : Was passed\n\n", msg);
+		passeds++;
+	}
+	else {
+		printf("❌ %s : Something wrong\n\n", msg);
+	}
+
+	return result;
+}
+
 
 
 int main() {
@@ -10,26 +38,20 @@ int main() {
 
 	init();
 
+	test_clean(EXTENDED, REDUCED, "All exchanges");
+	test_clean("Aí José coração vovô", "AI JOSE CORACAO VOVO", "Basic accents");
+	test_clean("€ℤ", "EZ", "Symbols to letters");
+	test_clean("❤️ 😻", "❤️ 😻", "Basic emojis");
 
-	/* char* str = "€pâ ai helo aa❤️ ℤ😻"; */
-	/* char* str = "âãäáàêẽëéèîĩïíìôõöóòûũüúùyŷỹÿýỳçℤÂÃÄÁÀÊẼËÉÈÎĨÏÍÌÔÕÖÓÒÛŨÜÚÙYŶỸŸÝỲÇ.,:;!@?-€"; */
+	printf("\n%d/%d - ", count, passeds);
 
+	if (passeds == count) {
+		printf("That is what we expected 🚀\n\n");
+	}
+	else {
+		printf("You disappointed me 😟\n\n");
+	}
 
-	/* char* str1  = "á€€pâÁ àái helo aa❤️ ℤrí😻"; */
-	char* original = "€ℤ";
-	char* expected = "EZ";
-	char  result[strlen(original)];
-	clean(original, result);
-
-	int c = test(strcmp(expected, result) == 0, "Symbols to letters");
-
-	printf("Original  = %s\n", original);
-	printf("Result    = %s\n", result);
-	printf("Expected  = %s\n", expected);
-	
-	printf("test = %d\n",c);
-
-	test_clean(original, expected);
 
 }
 

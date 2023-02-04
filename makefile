@@ -27,7 +27,7 @@ build:
 clean:
 	rm -rvf $(TESTS) $(MAIN) $(BUILD)*.o $(BUILD)
 
-test:
+tests:
 	$(TESTS)
 
 run:
@@ -38,4 +38,4 @@ run:
 
 
 
-
+# https://bytes.usc.edu/cs104/wiki/makefile/#cheat-sheet

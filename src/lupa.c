@@ -5,8 +5,8 @@
 
 #define MAX_CHARS 16777216 // 2^24 
 
-static char* accenteds   = ACCENTEDS;
-static char* unaccenteds = UNACCENTEDS;
+static char* accenteds   = EXTENDED;
+static char* unaccenteds = REDUCED;
 
 static char  valids[MAX_CHARS];
 
@@ -59,7 +59,7 @@ void init() {
 
 
 
-void clean(char* s, char* d) {
+void reduce(char* s, char* d) {
 
 	int i=0, j=0, idx=0;
 	unsigned char c;
