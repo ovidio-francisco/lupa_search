@@ -4,8 +4,6 @@
 #include "lupa.h"
 
 
-
-
 int main() {
 
 	printf("\n\n--- LUPA, the advanced search ---\n\n\n");

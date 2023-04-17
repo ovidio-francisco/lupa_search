@@ -5,6 +5,7 @@
 #define REDUCED  "AAAAAEEEEEIIIIIOOOOOUUUUUIIIIIICZAAAAAEEEEEIIIIIOOOOOUUUUUIIIIIIC        E" 
 
 void   init();
+void   deinit();
 double lupa(char* s1, char* s2);
 char*  clean(char* s, char* d);
 char*  trim(char* str, int end);

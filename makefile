@@ -7,9 +7,10 @@ COMPILE=$(CC) $(CFLAGS)
 
 TESTS=$(BUILD)tests
 MAIN=$(BUILD)main
+MYSQL_LIB=$(BUILD)liblupa_mysql.so
 
 
-all: main unitytests
+all: main unitytests liblupa_mysql.so
 
 unitytests: $(SRC)tests.c $(BUILD)lupa.o
 	$(COMPILE) $^ -o $(TESTS)
@@ -17,9 +18,14 @@ unitytests: $(SRC)tests.c $(BUILD)lupa.o
 main: $(SRC)main.c $(BUILD)lupa.o
 	$(COMPILE) $^ -o $(MAIN)
 
+liblupa_mysql.so: $(SRC)lupa_in_mysql.c $(BUILD)lupa.o
+	gcc -fPIC -shared -I./include -I/usr/include/mysql -o $(BUILD)liblupa_mysql.so $(SRC)lupa_in_mysql.c $(BUILD)lupa.o
+
 
 $(BUILD)lupa.o: $(SRC)lupa.c  build
 	$(COMPILE) -c $(SRC)lupa.c -o $(BUILD)lupa.o
+
+
 
 build:
 	mkdir -p $(BUILD)

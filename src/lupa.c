@@ -57,6 +57,10 @@ void init() {
 	}
 }
 
+void deinit() {
+
+}
+
 
 char* clean(char* s, char* d) {
 
