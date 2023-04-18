@@ -1,5 +1,5 @@
+#include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 #include "lupa.h"
 
 
@@ -8,7 +8,7 @@
 static char* accenteds   = EXTENDED;
 static char* unaccenteds = REDUCED;
 
-static char  valids[MAX_CHARS];
+static char* valids;
 
 
 
@@ -22,6 +22,12 @@ static int chain3(unsigned char c1, unsigned char c2, unsigned char c3);
 /* --- The implementations --- */
 
 void init() {
+
+	valids = (char*)malloc(MAX_CHARS * sizeof(char));
+
+	if(valids == NULL) {
+		exit(EXIT_FAILURE);
+	}
 
 	for(int i=0; i<MAX_CHARS; i++) {
 		valids[i] = i;
@@ -58,7 +64,10 @@ void init() {
 }
 
 void deinit() {
-
+	if(valids != NULL) {
+		free(valids);
+		valids = NULL;
+	}
 }
 
 

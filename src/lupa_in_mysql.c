@@ -13,12 +13,10 @@ char *lupa_in_mysql(UDF_INIT *initid, UDF_ARGS *args, char *result,
   int len = strlen(input_text);
 
   clean(input_text, output_text);
-  /* output_text = input_text; */
-  output_text[len] = '\0';
+
   initid->ptr = (char*)output_text;
   *length = len;
 
-  /* return output_text; */
   return output_text;
 }
 
@@ -27,15 +25,12 @@ void lupa_in_mysql_deinit(UDF_INIT *initid) {
     free(initid->ptr);
     initid->ptr = NULL;
   }
-  deinit();
+  deinit(); // lupa deinit
 }
 
 char lupa_in_mysql_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
-  // Perform any necessary setup or initialization here
-
   output_text = (char *)malloc((1024) * sizeof(char));
 
-  // todo: esse init aloca algum recurso que precise desalocar?
   init(); // lupa init
 
   return 0;

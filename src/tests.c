@@ -48,6 +48,7 @@ int main() {
 	test_clean("€ℤ", "EZ", "Symbols to letters");
 	test_clean("❤️ 😻", "❤️ 😻", "Basic emojis"); 
 
+	deinit();
 
 	printf("\n%d/%d - ", passeds, count);
 
