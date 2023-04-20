@@ -8,9 +8,7 @@ void   init();
 void   deinit();
 double lupa(char* s1, char* s2);
 char*  clean(char* s, char* d);
-char*  trim(char* str, int end);
 
-void copy(const char* s, char* d, int count);
 
 #endif
 

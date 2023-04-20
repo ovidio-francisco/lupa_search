@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include "utils.h"
 #include "lupa.h"
 
 
@@ -126,32 +127,9 @@ char* clean(char* s, char* d) {
 } 
 
 
-char*  trim(char* str, int end) {
-
-	while(str[end-1] == ' ') {
-		end--;
-	}
-
-	str[end] = 0;
-	
-	while(*str == ' ') {
-		str++;
-	} 
-
-	return str;
-}
-
-
 
 double lupa(char* s1, char* s2) {
 	return 0;
-}
-
-void copy(const char* s, char* d, int count) {
-	while(count-- && (*d = *s)) {
-		s++;
-		d++;
-	}
 }
 
 static int chain2(unsigned char c1, unsigned char c2) {
