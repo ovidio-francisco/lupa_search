@@ -104,7 +104,8 @@ char* clean(char* s, char* d) {
 
 		if (valid <= 127) {
 			i+=jmp;
-			if (j>0 && valid == d[j-1]) {
+			/* if (j>0 && valid == d[j-1]) { */
+			if (valid == d[j-1]) {
 				continue;
 			}
 			

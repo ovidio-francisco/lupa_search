@@ -2,6 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "lupa.h"
+#include "phoneticBr.h"
 
 
 int main() {
@@ -15,12 +16,15 @@ int main() {
 
 	printf("Input something: ");
 	scanf("%[^\n]s", input);
-
+	printf("\n");
 
 	clean(input, result);
-	printf("\n");
-	printf("Input  = %s\n", input);
-	printf("Result = %s\n", result);
+	printf("Input     = %s\n", input);
+	printf("Cleaned   = %s\n", result);
+	
+	phoneticBr(input, result);
+	printf("Input     = %s\n", input);
+	printf("PhonetcBr = %s\n", result);
 }
 
 /* https://www.geeksforgeeks.org/taking-string-input-space-c-3-different-methods/ */
