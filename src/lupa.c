@@ -22,9 +22,17 @@ static int chain3(unsigned char c1, unsigned char c2, unsigned char c3);
 
 /* --- The implementations --- */
 
-void init() {
+double lupa(char* s1, char* s2) {
+	return 0;
+}
+
+
+char init() {
 
 	valids = (char*)malloc(MAX_CHARS * sizeof(char));
+
+	if(valids == NULL) 
+		return 1;		// Failure
 
 	if(valids == NULL) {
 		exit(EXIT_FAILURE);
@@ -62,13 +70,17 @@ void init() {
 		}
 		j++;
 	}
+
+	return 0;
 }
 
-void deinit() {
+char deinit() {
 	if(valids != NULL) {
 		free(valids);
 		valids = NULL;
 	}
+
+	return 0;
 }
 
 
@@ -128,10 +140,6 @@ char* clean(char* s, char* d) {
 } 
 
 
-
-double lupa(char* s1, char* s2) {
-	return 0;
-}
 
 static int chain2(unsigned char c1, unsigned char c2) {
 	int result = c1;

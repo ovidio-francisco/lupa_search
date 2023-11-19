@@ -9,9 +9,21 @@ char next() {
 	return str[idx];
 }
 
-char* phoneticBr(char* text, char *result) {
-	copy(text, result);
-	return text;
+char* phonBr(char* text, char *result) {
+    char* t = text;
+    char* c = result;
+	
+	for( ; *t; t++, c++) {
+
+		*c = *t;
+	
+		if (*t == 's') {
+			*c = 'J';
+			continue;
+		}
+	}
+
+	return result;
 }
 
 

@@ -8,5 +8,5 @@ create function lupa_in_mysql
 	returns STRING 
     SONAME 'liblupa_mysql.so';
     
-select lupa_in_mysql("Olá Ovídio José") as upper;
+select lupa_in_mysql("Olá Ovídio José, uniso") as upper;
 

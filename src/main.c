@@ -22,7 +22,7 @@ int main() {
 	printf("Input     = %s\n", input);
 	printf("Cleaned   = %s\n", result);
 	
-	phoneticBr(input, result);
+	phonBr(input, result);
 	printf("Input     = %s\n", input);
 	printf("PhonetcBr = %s\n", result);
 }

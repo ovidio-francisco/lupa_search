@@ -2,7 +2,7 @@
 #define PHONETICBR_H
 
 
-char* phoneticBr(char *text, char *result); 
+char* phonBr(char *text, char *result); 
 
 
 #endif
