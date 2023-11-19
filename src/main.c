@@ -18,13 +18,19 @@ int main() {
 	scanf("%[^\n]s", input);
 	printf("\n");
 
-	clean(input, result);
+	clear(input, result);
 	printf("Input     = %s\n", input);
 	printf("Cleaned   = %s\n", result);
 	
 	phonBr(input, result);
 	printf("Input     = %s\n", input);
 	printf("PhonetcBr = %s\n", result);
+
+	int jmp;
+	char c = get_clean("JoséFrancisco", 3, &jmp);
+	printf("clean = %c. Jmp = %d\n", c, jmp);
 }
 
 /* https://www.geeksforgeeks.org/taking-string-input-space-c-3-different-methods/ */
+
+

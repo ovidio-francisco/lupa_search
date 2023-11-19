@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "lupa.h"
 #include "phoneticBr.h"
 
 int idx;
@@ -12,15 +13,23 @@ char next() {
 char* phonBr(char* text, char *result) {
     char* t = text;
     char* c = result;
+	char dirt;
 	
 	for( ; *t; t++, c++) {
-
 		*c = *t;
+		
+		/* dirt = *t; */
+		/* *c = get_clean(dirt); */
 	
-		if (*t == 's') {
-			*c = 'J';
+		if (*c == 'S') {
+			*c = 'Z';
 			continue;
 		}
+
+		/* if (dirt>=192 && dirt<224) { */
+			/* t++;	 */
+		/* } */
+			
 	}
 
 	return result;

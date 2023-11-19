@@ -11,7 +11,7 @@ int test_clean(char* original, char* expected, char* msg) {
 	count++;
 
 	char  buffer[strlen(original)];
-	char* cleaned = clean(original, buffer);
+	char* cleaned = clear(original, buffer);
 
 	int result = strcmp(expected, cleaned) == 0;
 

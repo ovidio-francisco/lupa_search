@@ -83,8 +83,13 @@ char deinit() {
 	return 0;
 }
 
+char get_clean(char*s, int i, int* jmp) {
+	*jmp = 99;
+	return '?';
+}
 
-char* clean(char* s, char* d) {
+
+char* clear(char* s, char* d) {
 
 	int i=0, j=0, jmp=0, idx=0;
 	unsigned char c;

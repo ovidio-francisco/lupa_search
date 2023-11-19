@@ -4,7 +4,7 @@
 #include <mysql.h>
 
 
-char *lupa_in_mysql(UDF_INIT *initid, UDF_ARGS *args, char *result,
+char *lupa_clear(UDF_INIT *initid, UDF_ARGS *args, char *result,
                           unsigned long *length, char *is_null, char *error);
 
 char *phoneticBr(UDF_INIT *initid, UDF_ARGS *args, char *result,
