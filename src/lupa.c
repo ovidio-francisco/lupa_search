@@ -4,6 +4,8 @@
 #include "lupa.h"
 
 
+#include <stdio.h>
+
 #define MAX_CHARS 16777216 // 2^24 
 
 static char* accenteds   = EXTENDED;
@@ -34,9 +36,9 @@ char init() {
 	if(valids == NULL) 
 		return 1;		// Failure
 
-	if(valids == NULL) {
-		exit(EXIT_FAILURE);
-	}
+	/* if(valids == NULL) { */
+		/* exit(EXIT_FAILURE); */
+	/* } */
 
 	for(int i=0; i<MAX_CHARS; i++) {
 		valids[i] = i;
@@ -84,8 +86,32 @@ char deinit() {
 }
 
 char get_clean(char*s, int i, int* jmp) {
-	*jmp = 99;
-	return '?';
+	unsigned char c = s[i];
+	char result = 127;
+	int idx;
+
+	printf("c= %d\n", c);
+
+	if (c<=127) {
+		result = valids[c];
+		*jmp=1;
+	}
+	else {
+		if (c>=192 && c<224) {
+			idx = chain2(s[i], s[i+1]);
+			result = valids[idx];
+			*jmp=2;
+		}  
+		else {
+			if (c>=224 && c<240) {
+				idx = chain3(s[i], s[i+1], s[i+2]);
+				result = valids[idx];
+				*jmp=3;
+			}
+		}
+	}
+
+	return result;
 }
 
 

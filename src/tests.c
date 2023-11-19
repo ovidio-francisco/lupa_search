@@ -15,9 +15,9 @@ int test_clean(char* original, char* expected, char* msg) {
 
 	int result = strcmp(expected, cleaned) == 0;
 
-	/* printf("Original = '%s'\n", original);
-	 * printf("Result   = '%s'\n", cleaned);
-	 * printf("Expected = '%s'\n", expected);    */
+	printf("Original = '%s'\n", original);
+	printf("Result   = '%s'\n", cleaned);
+	printf("Expected = '%s'\n", expected);    
 
 	if (result) {
 		printf("👍 %s\n\n", msg);

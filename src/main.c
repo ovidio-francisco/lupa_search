@@ -26,9 +26,6 @@ int main() {
 	printf("Input     = %s\n", input);
 	printf("PhonetcBr = %s\n", result);
 
-	int jmp;
-	char c = get_clean("JoséFrancisco", 3, &jmp);
-	printf("clean = %c. Jmp = %d\n", c, jmp);
 }
 
 /* https://www.geeksforgeeks.org/taking-string-input-space-c-3-different-methods/ */

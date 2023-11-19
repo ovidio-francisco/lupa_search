@@ -7,10 +7,11 @@ COMPILE=$(CC) $(CFLAGS)
 
 TESTS=$(BUILD)tests
 MAIN=$(BUILD)main
+DEBUG=$(BUILD)debug
 MYSQL_LIB=$(BUILD)liblupa_mysql.so
 
 
-all: main unitytests liblupa_mysql.so
+all: main unitytests debug liblupa_mysql.so
 
 unitytests: $(SRC)tests.c $(BUILD)lupa.o  $(BUILD)utils.o
 	$(COMPILE) $^ -o $(TESTS)
@@ -18,8 +19,11 @@ unitytests: $(SRC)tests.c $(BUILD)lupa.o  $(BUILD)utils.o
 main: $(SRC)main.c $(BUILD)lupa.o $(BUILD)utils.o $(BUILD)phoneticBr.o
 	$(COMPILE) $^ -o $(MAIN)
 
+debug: $(SRC)debug.c $(BUILD)lupa.o $(BUILD)utils.o $(BUILD)phoneticBr.o
+	$(COMPILE) $^ -o $(DEBUG)
+
+
 liblupa_mysql.so: $(SRC)lupa_in_mysql.c $(BUILD)lupa.o $(BUILD)utils.o $(BUILD)phoneticBr.o
-	# gcc -fPIC -shared -I./include -I/usr/include/mysql -o $(BUILD)liblupa_mysql.so $(SRC)lupa_in_mysql.c $(BUILD)lupa.o $(BUILD)utils.o
 	$(COMPILE) -fPIC -shared -I/usr/include/mysql $^ -o $(BUILD)liblupa_mysql.so
 
 $(BUILD)utils.o: $(SRC)utils.c
@@ -45,7 +49,10 @@ tests:
 run:
 	$(MAIN)
 
-.PHONY: build clean check run
+deb: debug
+	$(DEBUG)
+
+.PHONY: build clean run debug
 
 
 
