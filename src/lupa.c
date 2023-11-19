@@ -36,10 +36,6 @@ char init() {
 	if(valids == NULL) 
 		return 1;		// Failure
 
-	/* if(valids == NULL) { */
-		/* exit(EXIT_FAILURE); */
-	/* } */
-
 	for(int i=0; i<MAX_CHARS; i++) {
 		valids[i] = i;
 	}
@@ -87,10 +83,8 @@ char deinit() {
 
 char get_clean(char*s, int i, int* jmp) {
 	unsigned char c = s[i];
-	char result = 127;
+	unsigned char result = 255;
 	int idx;
-
-	printf("c= %d\n", c);
 
 	if (c<=127) {
 		result = valids[c];
@@ -114,40 +108,19 @@ char get_clean(char*s, int i, int* jmp) {
 	return result;
 }
 
-
 char* clear(char* s, char* d) {
 
 	int i=0, j=0, jmp=0, idx=0;
-	unsigned char c;
 	unsigned char valid;
 
 	do {
-		c = s[i];
 		jmp=0;
 		valid = 255;
 
-		if (c<=127) {
-			valid = valids[c];
-			jmp=1;
-		}
-		else {
-			if (c>=192 && c<224) {
-				idx = chain2(s[i], s[i+1]);
-				valid = valids[idx];
-				jmp=2;
-			}  
-			else {
-				if (c>=224 && c<240) {
-					idx = chain3(s[i], s[i+1], s[i+2]);
-					valid = valids[idx];
-					jmp=3;
-				}
-			}
-		}
+		valid = get_clean(s, i, &jmp);
 
 		if (valid <= 127) {
 			i+=jmp;
-			/* if (j>0 && valid == d[j-1]) { */
 			if (valid == d[j-1]) {
 				continue;
 			}
