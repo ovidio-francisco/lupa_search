@@ -2,34 +2,35 @@
 #include "lupa.h"
 #include "phoneticBr.h"
 
-int idx;
-char c;
-char* str;
-
-char next() {
-	return str[idx];
-}
+#include <stdio.h>
 
 char* phonBr(char* text, char *result) {
-    char* t = text;
-    char* c = result;
-	char dirt;
+	char c, next, prev;
+	int i, j, jmp;
+
+	i=0;
+	c=127;
+	next = get_clean(text, i, &jmp);
 	
-	for( ; *t; t++, c++) {
-		*c = *t;
+	for(i=j=0; c; i+=jmp) {
 		
-		/* dirt = *t; */
-		/* *c = get_clean(dirt); */
+		prev = c;
+		c    = next;
+		next = get_clean(text, i, &jmp);
+
+		while (c == next) {
+			i += jmp;
+			next = get_clean(text, i, &jmp);
+		}
 	
-		if (*c == 'S') {
-			*c = 'Z';
+		if (c == 'S' && is_vowel(prev) && is_vowel(next)) {
+			result[j++] = _Z;
 			continue;
 		}
 
-		/* if (dirt>=192 && dirt<224) { */
-			/* t++;	 */
-		/* } */
-			
+		if (c < 127) {
+			result[j++] = c;
+		}
 	}
 
 	return result;

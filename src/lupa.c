@@ -11,7 +11,13 @@
 static char* accenteds   = EXTENDED;
 static char* unaccenteds = REDUCED;
 
+static char vowels[]     = VOWELS;
+static char consonants[] = CONSONANTS;
+static char numbers[]    = NUMBERS;
+
 static char* valids;
+static char* chars_types;
+
 
 
 
@@ -29,8 +35,52 @@ double lupa(char* s1, char* s2) {
 }
 
 
-char init() {
+char is_vowel(char c) {
+	return chars_types[c] == VOWEL;
+}
 
+char is_consonant(char c) {
+	return chars_types[c] == CONSONANT;
+}
+
+char is_number(char c) {
+	return chars_types[c] == NUMBER;
+}
+
+
+
+
+char init_chars_types() {
+	int start = 0;
+	int end = _Z;
+	int size = end - start + 1;
+
+	int vowels_size =     sizeof(vowels)/sizeof(vowels[0]);
+	int consonants_size = sizeof(consonants)/sizeof(consonants[0]);
+	int numbers_size =    sizeof(numbers)/sizeof(numbers[0]);
+	
+	chars_types = (char*)malloc(size * sizeof(char));
+
+	for(int i=start; i<=end; i++) {
+		chars_types[i] = UNKNONW;
+	}
+
+	for(int i=0; i<vowels_size; i++) {
+		chars_types[vowels[i]] = VOWEL;
+	}
+
+	for(int i=0; i<consonants_size; i++) {
+		chars_types[consonants[i]] = CONSONANT;
+	}
+
+	for(int i=0; i<numbers_size; i++) {
+		chars_types[numbers[i]] = NUMBER;
+	}
+
+	return 0;
+}
+
+char init_valids() {
 	valids = (char*)malloc(MAX_CHARS * sizeof(char));
 
 	if(valids == NULL) 
@@ -72,11 +122,37 @@ char init() {
 	return 0;
 }
 
+
+char init() {
+	return 
+	init_valids() ||
+	init_chars_types();
+}
+
 char deinit() {
+	return 
+	deinit_valids() ||
+	deinit_letters_types();
+}
+
+char deinit_valids() {
 	if(valids != NULL) {
 		free(valids);
 		valids = NULL;
 	}
+	if(accenteds != NULL) {
+		free(accenteds);
+		accenteds = NULL;
+	}
+	if(unaccenteds != NULL) {
+		free(unaccenteds);
+		unaccenteds = NULL;
+	}
+
+	return 0;
+}
+
+char deinit_letters_types() {
 
 	return 0;
 }

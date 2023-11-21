@@ -1,18 +1,20 @@
 #include <stdio.h>
 #include "lupa.h"
+#include "phoneticBr.h"
 
 int main() {
 	printf("--- Debug ---\n\n");
 
 	init();
-	
-	int jmp;
-	unsigned char c = get_clean("José.€ℤ❤️  😻", 6, &jmp);
-	printf("clean = %c | %d. Jmp = %d\n", c, c, jmp);
 
-	     c = get_clean("José.€ℤ❤️  😻", 9, &jmp);
-	printf("clean = %c | %d. Jmp = %d\n", c, c, jmp);
+	char* str = "jjjjooooosssssseeeeéééêêê";
+	char str1[100]; 
+	phonBr(str, str1);
 
-	     c = get_clean("José.€ℤ❤️  😻", 12, &jmp);
-	printf("clean = %c | %d. Jmp = %d\n", c, c, jmp);
+	printf("Original: %s\n", str);
+	printf("Phonetic: %s\n", str1);
+
 }
+
+
+
