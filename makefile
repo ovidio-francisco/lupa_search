@@ -13,7 +13,7 @@ MYSQL_LIB=$(BUILD)liblupa_mysql.so
 
 all: main unitytests debug liblupa_mysql.so
 
-unitytests: $(SRC)tests.c $(BUILD)lupa.o  $(BUILD)utils.o
+unitytests: $(SRC)tests.c $(BUILD)lupa.o  $(BUILD)utils.o $(BUILD)phoneticBr.o
 	$(COMPILE) $^ -o $(TESTS)
 
 main: $(SRC)main.c $(BUILD)lupa.o $(BUILD)utils.o $(BUILD)phoneticBr.o
@@ -43,7 +43,7 @@ build:
 clean:
 	rm -rvf $(TESTS) $(MAIN) $(BUILD)*.o $(BUILD)
 
-tests:
+tests: unitytests
 	$(TESTS)
 
 run:

@@ -34,9 +34,9 @@
 #define SPACE ' '
 #define UNKNONW 127
 
-#define VOWEL     0
-#define CONSONANT 1
-#define NUMBER    2
+#define VOWEL     1
+#define CONSONANT 2
+#define NUMBER    3
 
 #define CONSONANTS {_B, _C, _D, _F, _G, _H, _J, _K, _L, _M, _N, _P, _Q, _R, _S, _T, _V, _X, _Z}
 #define VOWELS     {_A, _E, _I, _O, _U, _Y}
@@ -48,7 +48,7 @@ char   init_valids();
 char   init_chars_types();
 char   deinit();
 char   deinit_valids();
-char   deinit_letters_types();
+char   deinit_char_types();
 double lupa(char* s1, char* s2);
 char*  clear(char* s, char* d);
 char   get_clean(char*s, int i, int* jmp);

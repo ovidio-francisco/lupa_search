@@ -14,6 +14,8 @@ int main() {
 	printf("Original: %s\n", str);
 	printf("Phonetic: %s\n", str1);
 
+	deinit();
+
 }
 
 

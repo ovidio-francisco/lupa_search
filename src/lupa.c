@@ -90,7 +90,7 @@ char init_valids() {
 		valids[i] = i;
 	}
 
-	for(char l='a'; l<'z'; l++) {
+	for(char l='a'; l<='z'; l++) {
 		valids[l] = l - 32;
 	}
 
@@ -132,7 +132,7 @@ char init() {
 char deinit() {
 	return 
 	deinit_valids() ||
-	deinit_letters_types();
+	deinit_char_types();
 }
 
 char deinit_valids() {
@@ -140,19 +140,15 @@ char deinit_valids() {
 		free(valids);
 		valids = NULL;
 	}
-	if(accenteds != NULL) {
-		free(accenteds);
-		accenteds = NULL;
-	}
-	if(unaccenteds != NULL) {
-		free(unaccenteds);
-		unaccenteds = NULL;
-	}
 
 	return 0;
 }
 
-char deinit_letters_types() {
+char deinit_char_types() {
+	if(chars_types != NULL) {
+		free(chars_types);
+		chars_types = NULL;
+	}
 
 	return 0;
 }

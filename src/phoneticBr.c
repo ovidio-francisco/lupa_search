@@ -12,21 +12,69 @@ char* phonBr(char* text, char *result) {
 	c=127;
 	next = get_clean(text, i, &jmp);
 	
-	for(i=j=0; c; i+=jmp) {
+	i+=jmp;
+	j=0;
+
+	for(; c; i+=jmp) {
 		
 		prev = c;
 		c    = next;
 		next = get_clean(text, i, &jmp);
 
+
+		/* --- Rules --- */
+				
+		/* printf("prev='%c' c='%c' next='%c'\n\n", prev, c, next); */
+	
+		if (c == 'S' ) {
+
+			if (is_vowel(prev) && is_vowel(next)) {
+				result[j++] = _Z;
+				continue;
+			}
+			
+			while (next == 'C') {
+				i += jmp;
+				next = get_clean(text, i, &jmp);
+			}
+
+		}
+
+		if (c == 'R') {
+			if ( is_vowel(prev) && is_vowel(next) ) {
+				result[j++] = 'r';
+				continue;
+			}
+
+			while (next == 'R') {                   // remove repetitions to check if it is the last  
+				i += jmp;
+				next = get_clean(text, i, &jmp);
+			}
+
+			if (next == 0 || is_consonant(next)) {                        // is the last?
+				result[j++] = 'r';
+				continue;
+			}
+		}
+
+		/* --- Remove repetitions --- */
+
 		while (c == next) {
 			i += jmp;
 			next = get_clean(text, i, &jmp);
 		}
-	
-		if (c == 'S' && is_vowel(prev) && is_vowel(next)) {
-			result[j++] = _Z;
-			continue;
+
+		
+		if (c == 'Z') {
+			if(next == ' ' || next == 0) {
+				result[j++] = _S;
+				continue;
+			}	
 		}
+
+
+
+		/* --- Add the char --- */
 
 		if (c < 127) {
 			result[j++] = c;

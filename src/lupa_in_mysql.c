@@ -19,7 +19,7 @@ char *lupa_clear(UDF_INIT *initid, UDF_ARGS *args, char *result,
 	initid->ptr = (char*)output_text;
 	*length = len;
 
-	output_text[1] = 'H'; // Just for test if it make any change.
+	/* output_text[1] = 'H'; // Just for test if it make any change. */
 
 	return output_text;
 }
