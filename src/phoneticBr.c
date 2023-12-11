@@ -46,12 +46,12 @@ char* phonBr(char* text, char *result) {
 				continue;
 			}
 
-			while (next == 'R') {                   // remove repetitions to check if it is the last  
+			while (next == 'R') {                                          // remove repetitions to check if it is the last  
 				i += jmp;
 				next = get_clean(text, i, &jmp);
 			}
 
-			if (next == 0 || is_consonant(next)) {                        // is the last?
+			if (next == 0 || next == ' ' || is_consonant(next)) {          // is the last? Or is next a consonant != 'R'?
 				result[j++] = 'r';
 				continue;
 			}
@@ -72,6 +72,9 @@ char* phonBr(char* text, char *result) {
 			}	
 		}
 
+		if (c == 'C') {
+
+		}
 
 
 		/* --- Add the char --- */
