@@ -7,12 +7,17 @@ int main() {
 
 	init();
 
-	char* str = "jjjjooooosssssseeeeéééêêê";
+	char* str = "jose.francisco";
 	char str1[100]; 
-	phonBr(str, str1);
 
-	printf("Original: %s\n", str);
-	printf("Phonetic: %s\n", str1);
+	int jmp=0;
+	char clean = get_clean(str, 4, &jmp);
+	printf("clean = '%c'\n", clean);
+
+	/* phonBr(str, str1); */
+
+	/* printf("Original: %s\n", str); */
+	/* printf("Phonetic: %s\n", str1); */
 
 	deinit();
 
