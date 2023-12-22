@@ -167,8 +167,32 @@ int main() {
 	test_phonetic("trouxe",    "TROUCE",    "UX → C");
 	test_phonetic("máximo",    "MAXIMO",    "AX → X");
 	test_phonetic("abacaxi",   "ABACAXI",   "AX → X");
+	test_phonetic("abacachi",  "ABACAXI",   "CH → X");
 	test_phonetic("faxina",    "FAXINA",    "AX → X");
 	test_phonetic("Alexandre", "ALEZANDRE", "EX → X");
+
+	test_phonetic("advodado", "ADIVOGADO", "D mute → DI");
+	test_phonetic("pneu", "PINEU", "P mute → PI");
+	test_phonetic("vietnã", "VIETINA", "V mute → VI");
+
+
+	test_phonetic("Xavier xylografou uma xilogravura com extremo zelo.", 
+				  "XAVIEr XILOGRAFOU UMA XILOGRAVUrA CON ESTREMO ZELO", "");
+	test_phonetic("O xenófobo estava perplexo com a xenofobia que presenciou.", 
+				  "O XENOFOBO ESTAVA PErPLEZO CON A XENOFOBIA CE PREZENCIOU", "");
+	test_phonetic("O xylophonista entrou no jazz com um solo de xylophone surpreendente.", 
+				  "O XILOFONISTA ENTROU NO JAS CON UN SOLO DE XILOFONE SUrPRENDENTE", "");
+	test_phonetic("A chef preparou uma pho vietnamita que conquistou todos os paladares.", 
+				  "A XEF PREPArOU UMA FO VIETNAMITA CE CONCISTOU TODOS OS PALADArES", "");
+	test_phonetic("O xamã Natan realizou um ritual místico na choupana da floresta.", 
+				  "O XAMA NATA REALIZOU UN RITUAU MISTICO NA XOUPANA DA FLOrESTA", "");
+
+
+
+
+
+
+
 
 /* abacaxi */
 	/* faxina */

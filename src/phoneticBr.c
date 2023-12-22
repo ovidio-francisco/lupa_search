@@ -155,17 +155,19 @@ char* phonBr(char* text, char *result) {
 			}
 		}
 
-		if (c == 'N' && next == 'H') {
-			REMOVE_NEXTS('H');
-			ADD(_NH);
-		}
+		if (c == 'M' || c == 'N' ) {
+			if (next == 'H') {
+				REMOVE_NEXTS('H');
+				ADD(_NH);
+			}
 
-		if (c == 'M' || c == 'N') {
 			if (prev == 'A' && IS_LAST) {
 				continue;
 			}
-			if (is_consonant(next) || IS_LAST)
-				ADD(_N);
+		}
+
+		if (c == 'M' && ( IS_LAST || is_consonant(next))) {
+			ADD(_N);
 		}
 
 		
@@ -174,6 +176,9 @@ char* phonBr(char* text, char *result) {
 		X_TO_Y(_K, _C);
 		X_TO_Y(_Q, _C);
 		
+		/* if (c == 'I') { */
+			/* continue; */
+		/* } */
 
 		if (c == ' ' && next == 0) {
 			/* just continue */
