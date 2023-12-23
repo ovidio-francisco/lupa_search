@@ -87,8 +87,8 @@ int main() {
 	test_phonetic("casta",        "CASTA",     "vowel + S + consonant → S");
 	test_phonetic("sapo",         "SAPO",      "S at first → S");
 	test_phonetic("cassandra",    "CASANDRA",  "S + S → S");
-	test_phonetic("nascimento",   "NASIMENTO", "S + S → S");
-	test_phonetic("nascccimento", "NASIMENTO", "S + S → S");
+	test_phonetic("nascimento",   "NASMENTO", "S + S → S");
+	test_phonetic("nascccimento", "NASMENTO", "S + S → S");
 	test_phonetic("voraz",        "VOrAS",     "Z at the end → S");
 	test_phonetic("vorazzzz",     "VOrAS",     "Z at the end → S");
 
@@ -98,7 +98,7 @@ int main() {
 	test_phonetic("torrrrrrada", "TORADA", "R + R → R");
 	test_phonetic("aranha",      "ArA~A",  "R + R → R");
 	test_phonetic("torta",       "TOrTA",  "R + R → R");
-	test_phonetic("Henri",       "HENRI",  "R + R → R");
+	test_phonetic("Henri",       "HENR",  "R + R → R");
 	test_phonetic("amarrrr",     "AMAr",   "R + R → R");
 	test_phonetic("trator",      "TRATOr", "R at the end → r");
 
@@ -106,145 +106,102 @@ int main() {
 	test_phonetic("guto", "GUTO", "G+(aou) → G");
 	test_phonetic("gota", "GOTA", "G+(aou) → G");
 
-	test_phonetic("girafa", "JIrAFA", "G+(aou) → J");
+	test_phonetic("girafa", "JrAFA",  "G+(aou) → J");
 	test_phonetic("gestão", "JESTAO", "G+e → J");
 	test_phonetic("jeito",  "JEITO",  "J+e → J");
-	test_phonetic("jiló",   "JILO",   "J+i → J");
+	test_phonetic("jiló",   "JLO",    "J+i → J");
 
 	test_phonetic("guerra",       "GERA",   "G+UE → G");
-	test_phonetic("guuuuuitarra", "GITARA", "G+UI → G");
+	test_phonetic("guuuuuitarra", "GTARA", "G+UI → G");
 
-	test_phonetic("Henriquuuue", "HENRICE", "Q+UE → C");
+	test_phonetic("Henriquuuue", "HENRCE", "Q+UE → C");
 
 	test_phonetic("quanto", "CUANTO", "Q+UA → CU");
 	test_phonetic("que?",   "CE",     "Q+UE → CE");
 
-	test_phonetic("Será",  "SErA", "^SE → SE");
+	test_phonetic("Será",  "SErA",  "^SE → SE");
 	test_phonetic("Cesar", "SEZAr", "^CE → SE");
-	test_phonetic("Cisão", "SIZAO", "^CE → SE");
+	test_phonetic("Cisão", "SZAO",  "^CE → SE");
 
 	test_phonetic("VALTER", "VALTEr", "V → V");
 	test_phonetic("WALTER", "VALTEr", "W → V");
 
-	test_phonetic("FARMÁCIA",     "FArMACIA", "F → F");
-	test_phonetic("PHARMÁCIA",    "FArMACIA", "PH → F");
-	test_phonetic("PHHHHARMÁCIA", "FArMACIA", "PH → F");
+	test_phonetic("FARMÁCIA",     "FArMASIA", "F → F");
+	test_phonetic("PHARMÁCIA",    "FArMASIA", "PH → F");
+	test_phonetic("PHHHHARMÁCIA", "FArMASIA", "PH → F");
 
 	test_phonetic("Caique", "CAICE", "C → C");
 	test_phonetic("KaiKe",  "CAICE", "K → C");
 
-	test_phonetic("lama",    "LAMA", "L+vowel → L");
-	test_phonetic("lhama",   "LIAMA", "L+H → L");
-	test_phonetic("familia", "FAMILIA", "L+I → LI");
-	test_phonetic("familha", "FAMILIA", "L+H → LI");
+	test_phonetic("lama",    "LAMA",   "L+vowel → L");
+	test_phonetic("lhama",   "LIAMA",  "L+H → L");
+	test_phonetic("familia", "FAMLIA", "L+I → LI");
+	test_phonetic("familha", "FAMLIA", "L+H → LI");
 
 	test_phonetic("cha",    "XA",    "CH+vowel → X");
 	test_phonetic("Sheila", "XEILA", "SH+vowel → X");
 
-	test_phonetic("também", "TANBEN", "M+consonant → N");
-	test_phonetic("sente",  "SENTE",  "N+consonant → N");
-	test_phonetic("sum",    "SUN",    "N at last → N");
 
-	test_phonetic("caça",   "CASA", "Ç → S");
-	test_phonetic("caca",   "CACA", "C → C");
+	test_phonetic("também", "TANBEIN", "M+consonant → N");
+	test_phonetic("sente",  "SENTE",   "N+consonant → N");
+	test_phonetic("sum",    "SUN",     "N at last → N");
 
-	test_phonetic("romam",  "ROMA", "M at last → removed");
-	test_phonetic("roman",  "ROMA", "M at last → removed");
+	test_phonetic("caça",   "CASA",  "Ç → S");
+	test_phonetic("caca",   "CACA",  "C → C");
 
-	test_phonetic("mingau", "MINGAU", "U at last → U");
-	test_phonetic("sal",    "SAU", "L at last → U");
+	test_phonetic("romam",  "ROMA",  "M at last → removed");
+	test_phonetic("roman",  "ROMA",  "M at last → removed");
 
-	test_phonetic("ninho",    "NI~O", "NH → ~");
+	test_phonetic("mingau", "MNGAU", "U at last → U");
+	test_phonetic("sal",    "SAU",   "L at last → U");
+
+	test_phonetic("ninho",  "N~O",   "NH → ~");
 
 	test_phonetic("exame",     "EZAME",     "EX → Z");
-	test_phonetic("exercício", "EZErCICIO", "EX → Z");
+	test_phonetic("exercício", "EZErSSIO",  "EX → Z");
+	test_phonetic("exumação",  "EZUMASAO",  "EX → Z");
+	test_phonetic("exilado",   "EZLADO",    "EX → Z");
 	test_phonetic("xarope",    "XArOPE",    "X at beginning → X");
-	test_phonetic("enxame",    "ENXAME",    "X at beginning → X");
+	test_phonetic("enxame",    "ENXAME",    "XA → XA");
 	test_phonetic("texto",     "TESTO",     "XT → S");
 	test_phonetic("extensão",  "ESTENSAO",  "XT → S");
-	test_phonetic("Próximo",   "PROCIMO",   "OX → C");
-	test_phonetic("Auxílio",   "AUCILIO",   "UX → C");
-	test_phonetic("trouxe",    "TROUCE",    "UX → C");
-	test_phonetic("máximo",    "MAXIMO",    "AX → X");
-	test_phonetic("abacaxi",   "ABACAXI",   "AX → X");
-	test_phonetic("abacachi",  "ABACAXI",   "CH → X");
-	test_phonetic("faxina",    "FAXINA",    "AX → X");
+	test_phonetic("Próximo",   "PROSMO",    "OX → C");
+	test_phonetic("Auxílio",   "AUSLIO",    "UX → C");
+	test_phonetic("trouxe",    "TROUSE",    "UX → C");
+	test_phonetic("máximo",    "MAXMO",     "AX → X");
+	test_phonetic("abacaxi",   "ABACAX",    "AX → X");
+	test_phonetic("abacachi",  "ABACAX",    "CH → X");
+	test_phonetic("faxina",    "FAXNA",     "AX → X");
 	test_phonetic("Alexandre", "ALEZANDRE", "EX → X");
+	test_phonetic("Pixote",    "PXOTE",     "IX → IX");
+	test_phonetic("Elixir",    "ELXr",      "IX → IX");
 
-	test_phonetic("advodado", "ADIVOGADO", "D mute → DI");
-	test_phonetic("pneu", "PINEU", "P mute → PI");
-	test_phonetic("vietnã", "VIETINA", "V mute → VI");
+	test_phonetic("Excesso",   "ESESO",    "XC → S");
+	test_phonetic("Exceto",    "ESETO",    "XC → S");
+	test_phonetic("Excelente", "ESELENTE", "XC → S");
+	test_phonetic("sexto",     "SESTO",    "X+consonant → S");
+	test_phonetic("texto",     "TESTO",    "X+consonant → S");
+	test_phonetic("extensão",  "ESTENSAO", "X+consonant → S");
+
+	test_phonetic("advogado", "ADVOGADO", "D mute → D");
+	test_phonetic("pneu",     "PNEU",     "P mute → P");
+	test_phonetic("vietnã",   "VIETNA",   "V mute → V");
+
+	test_phonetic("também", "TANBEIN", "M+consonant → N");
 
 
 	test_phonetic("Xavier xylografou uma xilogravura com extremo zelo.", 
-				  "XAVIEr XILOGRAFOU UMA XILOGRAVUrA CON ESTREMO ZELO", "");
+				  "XAVIEr XLOGRAFOU UMA XLOGRAVUrA CON ESTREMO ZELO", "");
 	test_phonetic("O xenófobo estava perplexo com a xenofobia que presenciou.", 
-				  "O XENOFOBO ESTAVA PErPLEZO CON A XENOFOBIA CE PREZENCIOU", "");
+				  "O XENOFOBO ESTAVA PErPLEZO CON A XENOFOBIA CE PREZENSIOU", "");
 	test_phonetic("O xylophonista entrou no jazz com um solo de xylophone surpreendente.", 
-				  "O XILOFONISTA ENTROU NO JAS CON UN SOLO DE XILOFONE SUrPRENDENTE", "");
+				  "O XLOFONSTA ENTROU NO JAS CON UN SOLO DE XLOFONE SUrPRENDENTE", "");
 	test_phonetic("A chef preparou uma pho vietnamita que conquistou todos os paladares.", 
-				  "A XEF PREPArOU UMA FO VIETNAMITA CE CONCISTOU TODOS OS PALADArES", "");
+				  "A XEF PREPArOU UMA FO VIETNAMTA CE CONCSTOU TODOS OS PALADArES", "");
 	test_phonetic("O xamã Natan realizou um ritual místico na choupana da floresta.", 
-				  "O XAMA NATA REALIZOU UN RITUAU MISTICO NA XOUPANA DA FLOrESTA", "");
+				  "O XAMA NATA REALZOU UN RTUAU MSTCO NA XOUPANA DA FLOrESTA", "");
 
 
-
-
-
-
-
-
-/* abacaxi */
-	/* faxina */
-	/* Alexandre */
-
-
-// MN
-// SH
-// romã e romam
-// sal sau
-// adivogado
-// peneu
-// ninho
-// fax
-// caça cassa
-//
-//
-
-
-
-// Regras do X
-/* NA ULTIMA SILABA     = KiS   */
-/* EX+ VOGAL = Z    */
-/* IX+ VOGAL = X   */
-/* OX+ I     = X   */
-/* UX+    */
-
-
-
-/* X no começo */
-/* Xícara */
-/* Xarope */
-/* Xadrez */
-/* Xereta */
-
-/* X sem som */
-/* Excesso */
-/* Exceto */
-/* excelente */
-
-
-/* X → S */
-/* sexto */
-/* texto */
-/* Extensão */
-
-
-/* X → S */
-/* Próximo */
-/* Auxílio */
-/* trouxe */
-/* maximo */
 
 /* X → KS */
 /* Fixo */
@@ -255,8 +212,6 @@ int main() {
 /* Matrix */
 /* Fixação */
 	
-/* Pixote */
-/* Elixir */
 
 
 	deinit();

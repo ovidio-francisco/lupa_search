@@ -34,16 +34,18 @@
 }
 
 
+
 char* phonBr(char* text, char *result) {
 	unsigned char c, next, prev;
 	int i, j, jmp;
 
 	i=0;
+	j=0;
 	c=127;
+
 	next = get_clean(text, i, &jmp);
 	
 	i+=jmp;
-	j=0;
 
 	for(; c; i+=jmp) {
 		
@@ -77,7 +79,7 @@ char* phonBr(char* text, char *result) {
 
 			REMOVE_NEXTS('R');
 
-			if (IS_LAST || is_consonant(next)) {      // is the last? Or is next a consonant != 'R'?
+			if (IS_LAST || is_consonant(next)) {      
 				ADD('r');
 			}
 		}
@@ -93,7 +95,21 @@ char* phonBr(char* text, char *result) {
 
 		/* --- ------------------ --- */
 
+	
+		if (c == 'I' && is_consonant(result[j-1]) && (is_consonant(next) || IS_LAST) ) {
+			continue;
+		}
 		
+		if (c == 'U') {
+			if( (prev == 'Q' || prev == 'G') && NEXT_IS('E','I') ) {
+				/* just continue */
+				continue;
+			}	
+		}
+
+
+
+
 		if (c == 'Z') {
 			if(next == ' ' || next == 0) {
 				ADD(_S);
@@ -101,7 +117,7 @@ char* phonBr(char* text, char *result) {
 		}
 
 		if (c == 'C'  ) {
-			if (j == 0 && NEXT_IS('E', 'I')) {
+			if (NEXT_IS('E', 'I')) {
 				ADD(_S);
 			}
 			if (next == 'H') {
@@ -116,30 +132,23 @@ char* phonBr(char* text, char *result) {
 			}	
 		}
 
-		if (c == 'U') {
-			if( (prev == 'Q' || prev == 'G') && NEXT_IS('E','I') ) {
-				/* just continue */
-				continue;
-			}	
-		}
-
 		if (c == 'P' && next == 'H') {
 			REMOVE_NEXTS('H')
 			ADD(_F);
 		}
 
 		if (c == 'X') {
-			if (next == 'T') {
-				ADD(_S);
-			}
-			if (is_consonant(next)) {    /* just continue */
+			if (next == 'C') {
 				continue;
+			}
+			if (is_consonant(next)) {
+				ADD(_S);
 			}
 			if (prev == 'E') {
 				ADD(_Z);
 			}
 			if (prev == 'O' || prev == 'U') {
-				ADD(_C);
+				ADD(_S);
 			}
 		}
 
@@ -164,6 +173,12 @@ char* phonBr(char* text, char *result) {
 			if (prev == 'A' && IS_LAST) {
 				continue;
 			}
+			if (prev == 'E' && IS_LAST) {
+				result[j++] = _I; 
+				result[j++] = _N; 
+				continue;
+				continue;
+			}
 		}
 
 		if (c == 'M' && ( IS_LAST || is_consonant(next))) {
@@ -175,10 +190,7 @@ char* phonBr(char* text, char *result) {
 		X_TO_Y(_W, _V);
 		X_TO_Y(_K, _C);
 		X_TO_Y(_Q, _C);
-		
-		/* if (c == 'I') { */
-			/* continue; */
-		/* } */
+	
 
 		if (c == ' ' && next == 0) {
 			/* just continue */
