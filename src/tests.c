@@ -3,6 +3,7 @@
 #include "lupa.h"
 #include "phoneticBr.h"
 #include "tests.h"
+#include "utils.h"
 
 int count = 0;
 int passeds = 0;
@@ -63,12 +64,7 @@ int test_phonetic(char* original, char* expected, char* msg) {
 }
 
 
-
-int main() {
-
-	printf("\n\n--- LUPA, the advanced search ---\n\n\n");
-
-	init();
+int test_the_clean() {
 
 	test_clean("abcdABCD", "ABCDABCD", "Just ASCII chars");
 	/* test_clean(EXTENDED, "AEIOUICZAEIOUIC E", "All exchanges"); */
@@ -80,7 +76,11 @@ int main() {
 	test_clean("€ℤ", "EZ", "Symbols to letters");
 	test_clean("❤️ 😻", "❤️ 😻", "Basic emojis"); 
 
+	return 1;
+}
 
+int test_the_phonetics() {
+	
 	test_phonetic("jjjjoooooseeeeéééêêê", "JOZE", "S between vowels → Z");
 
 	test_phonetic("casa",         "CAZA",      "S between vowels → Z");
@@ -203,16 +203,50 @@ int main() {
 
 
 
-/* X → KS */
-/* Fixo */
-/* Tóxico */
-/* Mixagem */
-/* Complexidade */
-/* Nix */
-/* Matrix */
-/* Fixação */
-	
+/*
+ * X → KS
+ * Fixo
+ * Tóxico
+ * Mixagem
+ * Complexidade
+ * Nix
+ * Matrix
+ * Fixação
+ */
 
+	return 1;
+}
+
+int test_the_cosine() {
+
+	char* list[100];
+
+	char str[100] = "Ovídio José Francisco";
+
+	split(str, list);
+
+	int i=0;
+
+	while(list[i]) {
+		/* printf("i=%d\n", i); */
+		printf("[%s]\n", list[i]);
+		i++;
+	}
+
+	return 1;
+}
+
+
+int main() {
+
+	printf("\n\n--- LUPA, the advanced search ---\n\n\n");
+
+	init();
+
+	/* test_the_clean(); */
+	/* test_the_phonetics(); */
+
+	test_the_cosine();
 
 	deinit();
 
