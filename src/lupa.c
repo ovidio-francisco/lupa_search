@@ -180,6 +180,10 @@ char get_clean(char*s, int i, int* jmp) {
 	return result;
 }
 
+
+
+// TODO: rever o clear e o trim.
+
 char* clear(char* s, char* d) {
 
 	int i=0, j=0, jmp=0, idx=0;

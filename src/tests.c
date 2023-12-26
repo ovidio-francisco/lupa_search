@@ -217,21 +217,63 @@ int test_the_phonetics() {
 	return 1;
 }
 
-int test_the_cosine() {
+
+
+void test_equal(char* s1, char* s2) {
+	count++;
+	if(equals(s1, s2)) {
+		passeds++;
+	}
+	else {
+		printf("'%s' and '%s' as not equal. But it is.\n", s1,s2);
+	}
+}
+
+void test_not_equal(char* s1, char* s2) {
+	count++;
+	if(!equals(s1, s2)) {
+		passeds++;
+	}
+	else {
+		printf("'%s' and '%s' as equal. But isn't.\n", s1,s2);
+	}
+}
+
+void test_the_equals() {
+
+	test_equal("abcde",   "abcde");
+	test_equal("ABCDE",   "ABCDE");
+	test_equal("abc def", "abc def");
+	test_equal("abc def", "abc def");
+
+	test_not_equal("abcde", "abcd" );
+	test_not_equal("abcde", "bcde" );
+	test_not_equal("bcde",  "abcde");
+	test_not_equal("abcd",  "abcde");
+
+}
+
+int test_splits() {
 
 	char* list[100];
-
-	char str[100] = "Ovídio José Francisco";
+	char str[100] = "Ovídio José Francisco Filho";
 
 	split(str, list);
 
-	int i=0;
+	count+=4;
+	passeds += strcmp(list[0], "Ovídio")    == 0 ? 1 : 0;
+	passeds += strcmp(list[1], "José")      == 0 ? 1 : 0;
+	passeds += strcmp(list[2], "Francisco") == 0 ? 1 : 0;
+	passeds += strcmp(list[3], "Filho")     == 0 ? 1 : 0;
 
-	while(list[i]) {
-		/* printf("i=%d\n", i); */
-		printf("[%s]\n", list[i]);
-		i++;
-	}
+
+	/*
+	 * int i=0;
+	 * while(list[i]) {
+	 *     printf("[%s]\n", list[i]);
+	 *     i++;
+	 * }
+	 */
 
 	return 1;
 }
@@ -245,8 +287,8 @@ int main() {
 
 	/* test_the_clean(); */
 	/* test_the_phonetics(); */
-
-	test_the_cosine();
+	/* test_splits(); */
+	test_the_equals();
 
 	deinit();
 
