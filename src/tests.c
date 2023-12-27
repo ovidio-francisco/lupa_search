@@ -266,29 +266,66 @@ int test_splits() {
 	passeds += strcmp(list[2], "Francisco") == 0 ? 1 : 0;
 	passeds += strcmp(list[3], "Filho")     == 0 ? 1 : 0;
 
-
-	/*
-	 * int i=0;
-	 * while(list[i]) {
-	 *     printf("[%s]\n", list[i]);
-	 *     i++;
-	 * }
-	 */
-
 	return 1;
 }
 
+void test_cosine(char* s1, char* s2, double expected) {
+
+	count++;
+
+	char str1[100];
+	char str2[100];
+
+	strcpy(str1, s1);
+	strcpy(str2, s2);
+
+
+	double result = cosine(str1, str2);
+	double diff = result - expected;
+
+	if (diff < 0) diff = -diff;
+
+	if(diff < 0.0001 )
+		passeds++;
+	else
+		printf("Cosine similarity:\n  Expected=%f\n Calculated: %f",
+				expected, result);
+}
+
+void test_the_cosines() {
+	test_cosine(
+			"maça banana goiaba goiaba banana", 
+			"goiaba uva maça maça", 0.544331);
+
+	/* 1 2 2 0
+	 * v1 = 1 2 2 0
+	 * v2 = 2 0 1 1
+	 */
+
+	test_cosine(
+			"hello world", 
+			"hi world", 0.5);
+	test_cosine(
+			"Olá mundo!", 
+			"Olá mundo!", 1);
+	test_cosine(
+			"Lógica matemática informação", 
+			"gato cachorro", 0);
+
+}
 
 int main() {
 
-	printf("\n\n--- LUPA, the advanced search ---\n\n\n");
+	printf("\n\n--- LUPA, the advanced search ---\n\n");
 
 	init();
 
-	/* test_the_clean(); */
+	/* test_the_clean();     */
 	/* test_the_phonetics(); */
-	/* test_splits(); */
-	test_the_equals();
+	/* test_splits();        */
+	/* test_the_equals();    */
+	test_the_cosines();
+
 
 	deinit();
 

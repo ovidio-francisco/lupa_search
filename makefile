@@ -14,7 +14,7 @@ MYSQL_LIB=$(BUILD)liblupa_mysql.so
 all: main unitytests debug liblupa_mysql.so
 
 unitytests: $(SRC)tests.c $(BUILD)lupa.o  $(BUILD)utils.o $(BUILD)phoneticBr.o
-	$(COMPILE) $^ -o $(TESTS)
+	$(COMPILE) $^ -o $(TESTS)  -lm 
 
 main: $(SRC)main.c $(BUILD)lupa.o $(BUILD)utils.o $(BUILD)phoneticBr.o
 	$(COMPILE) $^ -o $(MAIN)
@@ -27,7 +27,7 @@ liblupa_mysql.so: $(SRC)lupa_in_mysql.c $(BUILD)lupa.o $(BUILD)utils.o $(BUILD)p
 	$(COMPILE) -fPIC -shared -I/usr/include/mysql $^ -o $(BUILD)liblupa_mysql.so
 
 $(BUILD)utils.o: $(SRC)utils.c
-	$(COMPILE) -c $^ -o $(BUILD)utils.o
+	$(COMPILE) -c $^ -o $(BUILD)utils.o 
 
 $(BUILD)phoneticBr.o: $(SRC)phoneticBr.c
 	$(COMPILE) -fPIC -c $^ -o $(BUILD)phoneticBr.o
