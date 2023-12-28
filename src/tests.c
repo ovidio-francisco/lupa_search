@@ -108,7 +108,7 @@ int test_the_phonetics() {
 	test_phonetic("gota", "GOTA", "G+(aou) → G");
 
 	test_phonetic("girafa", "JrAFA",  "G+(aou) → J");
-	test_phonetic("gestão", "JESTAO", "G+e → J");
+	test_phonetic("gestão", "JESTAUN", "G+e → J");
 	test_phonetic("jeito",  "JEITO",  "J+e → J");
 	test_phonetic("jiló",   "JLO",    "J+i → J");
 
@@ -122,7 +122,7 @@ int test_the_phonetics() {
 
 	test_phonetic("Será",  "SErA",  "^SE → SE");
 	test_phonetic("Cesar", "SEZAr", "^CE → SE");
-	test_phonetic("Cisão", "SZAO",  "^CE → SE");
+	test_phonetic("Cisão", "SZAUN",  "^CE → SE");
 
 	test_phonetic("VALTER", "VALTEr", "V → V");
 	test_phonetic("WALTER", "VALTEr", "W → V");
@@ -160,12 +160,12 @@ int test_the_phonetics() {
 
 	test_phonetic("exame",     "EZAME",     "EX → Z");
 	test_phonetic("exercício", "EZErSSIO",  "EX → Z");
-	test_phonetic("exumação",  "EZUMASAO",  "EX → Z");
+	test_phonetic("exumação",  "EZUMASAUN", "EX → Z");
 	test_phonetic("exilado",   "EZLADO",    "EX → Z");
 	test_phonetic("xarope",    "XArOPE",    "X at beginning → X");
 	test_phonetic("enxame",    "ENXAME",    "XA → XA");
 	test_phonetic("texto",     "TESTO",     "XT → S");
-	test_phonetic("extensão",  "ESTENSAO",  "XT → S");
+	test_phonetic("extensão",  "ESTENSAUN", "XT → S");
 	test_phonetic("Próximo",   "PROSMO",    "OX → C");
 	test_phonetic("Auxílio",   "AUSLIO",    "UX → C");
 	test_phonetic("trouxe",    "TROUSE",    "UX → C");
@@ -177,18 +177,33 @@ int test_the_phonetics() {
 	test_phonetic("Pixote",    "PXOTE",     "IX → IX");
 	test_phonetic("Elixir",    "ELXr",      "IX → IX");
 
-	test_phonetic("Excesso",   "ESESO",    "XC → S");
-	test_phonetic("Exceto",    "ESETO",    "XC → S");
-	test_phonetic("Excelente", "ESELENTE", "XC → S");
-	test_phonetic("sexto",     "SESTO",    "X+consonant → S");
-	test_phonetic("texto",     "TESTO",    "X+consonant → S");
-	test_phonetic("extensão",  "ESTENSAO", "X+consonant → S");
+	test_phonetic("Excesso",   "ESESO",     "XC → S");
+	test_phonetic("Exceto",    "ESETO",     "XC → S");
+	test_phonetic("Excelente", "ESELENTE",  "XC → S");
+	test_phonetic("sexto",     "SESTO",     "X+consonant → S");
+	test_phonetic("texto",     "TESTO",     "X+consonant → S");
+	test_phonetic("extensão",  "ESTENSAUN", "X+consonant → S");
 
 	test_phonetic("advogado", "ADVOGADO", "D mute → D");
 	test_phonetic("pneu",     "PNEU",     "P mute → P");
 	test_phonetic("vietnã",   "VIETNA",   "V mute → V");
+	test_phonetic("vietnan",  "VIETNA",   "V mute → V");
+	test_phonetic("vietnam",  "VIETNA",   "V mute → V");
 
 	test_phonetic("também", "TANBEIN", "M+consonant → N");
+
+	test_phonetic("caminhão",  "CAM~AUN",  "AO  → AUN");
+	test_phonetic("caminhaum", "CAM~AUN",  "AUM → AUN");
+	test_phonetic("curaçao",   "CUrASAUN", "AO  → AUN");
+	test_phonetic("Maomé",     "MAOME",    "AO  → AO");
+	test_phonetic("Caos",      "CAOS",     "AO  → AO");
+
+
+	test_phonetic("corações",     "COrASOINS",   "OES  → OINS");
+	test_phonetic("coraçõins",    "COrASOINS",   "OINS → OINS");
+	test_phonetic("chapecoenses", "XAPECOENSES", "OE   → AO");
+	test_phonetic("coelho",       "COELIO",      "OE   → AO");
+	test_phonetic("coerente",     "COErENTE",    "OE   → AO");
 
 
 	test_phonetic("Xavier xylografou uma xilogravura com extremo zelo.", 
@@ -315,6 +330,21 @@ void test_the_cosines() {
 
 }
 
+
+double test_similarities(char* s1, char* s2) {
+	char  phon1[strlen(s1)];
+	phonBr(s1, phon1);
+	
+	char  phon2[strlen(s2)];
+	phonBr(s2, phon2);
+
+
+	printf("%s = %s\n", phon1, phon2);
+
+	return 0;
+}
+
+
 int main() {
 
 	printf("\n\n--- LUPA, the advanced search ---\n\n");
@@ -322,14 +352,16 @@ int main() {
 	init();
 	init_cosine_buffers(100);	
 
+
 	/* test_the_clean();     */
-	/* test_the_phonetics(); */
+	test_the_phonetics();
 	/* test_splits();        */
 	/* test_the_equals();    */
-	test_the_cosines();
+	/* test_the_cosines(); */
+	/* test_similarities("ovidio", "ovídio"); */
+
 
 	deinit_cosine_buffers();
-
 	deinit();
 
 	printf("\n%d/%d - ", passeds, count);

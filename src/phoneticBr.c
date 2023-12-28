@@ -10,6 +10,7 @@
 #define BETWEEN_VOWELS  ( is_vowel(prev) && is_vowel(next) )
 #define NEXT_IS(X,Y) 	( next == (X) || next == (Y) )
 #define IS_LAST         ( next == 0   || next == ' '  )
+#define NEXT2           ( get_clean(text, i+1, &jmp) )
 
 #define REMOVE_NEXTS(X)\
 {\
@@ -99,7 +100,8 @@ char* phonBr(char* text, char *result) {
 		if (c == 'I' && is_consonant(result[j-1]) && (is_consonant(next) || IS_LAST) ) {
 			continue;
 		}
-		
+	
+
 		if (c == 'U') {
 			if( (prev == 'Q' || prev == 'G') && NEXT_IS('E','I') ) {
 				/* just continue */
@@ -108,6 +110,20 @@ char* phonBr(char* text, char *result) {
 		}
 
 
+		if (c == 'O' ) {
+			if (prev == 'A' && IS_LAST) {
+				result[j++] = _U; 
+				result[j++] = _N; 
+				continue;
+			}
+			if (next == 'E' && NEXT2 == 'S') { 
+				REMOVE_NEXTS('E');
+				result[j++] = _O; 
+				result[j++] = _I; 
+				result[j++] = _N; 
+				continue;
+			}	
+		}
 
 
 		if (c == 'Z') {
