@@ -4,6 +4,7 @@
 #include "phoneticBr.h"
 #include "tests.h"
 #include "utils.h"
+#include "buffers.h"
 
 int count = 0;
 int passeds = 0;
@@ -288,7 +289,7 @@ void test_cosine(char* s1, char* s2, double expected) {
 	if(diff < 0.0001 )
 		passeds++;
 	else
-		printf("Cosine similarity:\n  Expected=%f\n Calculated: %f",
+		printf("Cosine similarity:\n  Expected=%f\n  Calculated: %f\n",
 				expected, result);
 }
 
@@ -297,7 +298,7 @@ void test_the_cosines() {
 			"maça banana goiaba goiaba banana", 
 			"goiaba uva maça maça", 0.544331);
 
-	/* 1 2 2 0
+	/* 
 	 * v1 = 1 2 2 0
 	 * v2 = 2 0 1 1
 	 */
@@ -319,6 +320,7 @@ int main() {
 	printf("\n\n--- LUPA, the advanced search ---\n\n");
 
 	init();
+	init_cosine_buffers(100);	
 
 	/* test_the_clean();     */
 	/* test_the_phonetics(); */
@@ -326,6 +328,7 @@ int main() {
 	/* test_the_equals();    */
 	test_the_cosines();
 
+	deinit_cosine_buffers();
 
 	deinit();
 

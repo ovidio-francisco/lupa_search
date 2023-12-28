@@ -1,26 +1,26 @@
-#include "utils.h"
 #include <math.h>
+#include "buffers.h"
+#include "utils.h"
 
 #include <stdio.h>
 
-void make_frequency_vetors(char* text, int* counts, char** all_tokens) {
-	char* tokens[100];
+void make_frequency_vectors(char* text, int* counts, char** all_tokens, char** sentence_tokens) {
 	
-	split(text, tokens);
+	split(text, sentence_tokens);
 
 	int i=0;
 	int j=0;
 
-	while(tokens[i]) {
+	while(sentence_tokens[i]) {
 		j=0;
 		while(all_tokens[j]) {
-			if (equals(tokens[i], all_tokens[j])) {
+			if (equals(sentence_tokens[i], all_tokens[j])) {
 				break;
 			}	
 			j++;
 		}	
 
-		all_tokens[j] = tokens[i];
+		all_tokens[j] = sentence_tokens[i];
 		counts[j]++;
 	
 		i++;
@@ -29,22 +29,19 @@ void make_frequency_vetors(char* text, int* counts, char** all_tokens) {
 
 double cosine(char* s1, char* s2) {
 
-	char* lt[100] = {[0 ... 99] = NULL};
-	int   v1[100] = {[0 ... 99] = 0};
-	int   v2[100] = {[0 ... 99] = 0};
-
-	make_frequency_vetors(s1, v1, lt);
-	make_frequency_vetors(s2, v2, lt);
+	clear_cosine_buffers();
+	make_frequency_vectors(s1, cosine_counts1, cosine_tokens, cosine_sentence_tokens);
+	make_frequency_vectors(s2, cosine_counts2, cosine_tokens, cosine_sentence_tokens);
 	
 	int dot = 0;
 	double mag_A = 0;
 	double mag_B = 0;
 
 	int i=0;
-	while(lt[i]) {
-		dot   += v1[i] * v2[i];
-		mag_A += v1[i] * v1[i]; 
-		mag_B += v2[i] * v2[i]; 
+	while(cosine_tokens[i]) {
+		dot   += cosine_counts1[i] * cosine_counts2[i];
+		mag_A += cosine_counts1[i] * cosine_counts1[i]; 
+		mag_B += cosine_counts2[i] * cosine_counts2[i]; 
 
 		i++;
 	}

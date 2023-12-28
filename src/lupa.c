@@ -186,7 +186,7 @@ char get_clean(char*s, int i, int* jmp) {
 
 char* clear(char* s, char* d) {
 
-	int i=0, j=0, jmp=0, idx=0;
+	int i=0, j=0, jmp=0;
 	unsigned char valid;
 
 	do {

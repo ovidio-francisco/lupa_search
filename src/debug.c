@@ -8,7 +8,7 @@ int main() {
 	init();
 
 	char* str = "jose.francisco";
-	char str1[100]; 
+	/* char str1[100];  */
 
 	int jmp=0;
 	char clean = get_clean(str, 4, &jmp);
