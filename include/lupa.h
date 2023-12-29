@@ -52,7 +52,7 @@ char   init_chars_types();
 char   deinit();
 char   deinit_valids();
 char   deinit_char_types();
-double lupa(char* s1, char* s2);
+double similarity(char* s1, char* s2);
 char*  clear(char* s, char* d);
 char   get_clean(char*s, int i, int* jmp);
 

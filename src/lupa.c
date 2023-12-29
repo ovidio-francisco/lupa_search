@@ -1,7 +1,8 @@
+#include "lupa.h"
 #include <stdlib.h>
 #include <string.h>
+#include "phoneticBr.h"
 #include "utils.h"
-#include "lupa.h"
 
 
 #include <stdio.h>
@@ -30,8 +31,15 @@ static int chain3(unsigned char c1, unsigned char c2, unsigned char c3);
 
 /* --- The implementations --- */
 
-double lupa(char* s1, char* s2) {
-	return 0;
+double similarity(char* s1, char* s2) {
+/* TODO: use buffers to the phonetizids */
+	char  phon1[strlen(s1)];
+	char  phon2[strlen(s2)];
+	
+	phonBr(s1, phon1);
+	phonBr(s2, phon2);
+	
+	return cosine(phon1, phon2);
 }
 
 

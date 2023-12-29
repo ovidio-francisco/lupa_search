@@ -345,14 +345,7 @@ void test_the_cosines() {
 double test_similarities(char* s1, char* s2, double expected) {
 	count++;
 
-	char  phon1[strlen(s1)];
-	phonBr(s1, phon1);
-	
-	char  phon2[strlen(s2)];
-	phonBr(s2, phon2);
-
-
-	double simi = cosine(phon1, phon2);
+	double simi = similarity(s1, s2);
 
 	double dif = simi - expected;
 	if (dif < 0) dif = -dif;
@@ -361,7 +354,7 @@ double test_similarities(char* s1, char* s2, double expected) {
 		passeds++;
 	}
 	else {
-		printf("Simi between %s & \n%s\n is %f. \n But expected is %f", phon1, phon2, simi, expected);
+		printf("Simi between %s & \n%s\n is %f. \n But expected is %f", s1, s2, simi, expected);
 	}
 
 	return simi;
