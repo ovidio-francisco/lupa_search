@@ -269,6 +269,17 @@ void test_the_equals() {
 
 }
 
+void test_splited(char* splited, char* expected) {
+	count ++;
+
+	if(equals(splited, expected)) {
+		passeds++;
+	}
+	else {
+		printf("  Splited: %s\n  Expected: %s\n", splited, expected);
+	}
+}
+
 int test_splits() {
 
 	char* list[100];
@@ -276,11 +287,11 @@ int test_splits() {
 
 	split(str, list);
 
-	count+=4;
-	passeds += strcmp(list[0], "Ovídio")    == 0 ? 1 : 0;
-	passeds += strcmp(list[1], "José")      == 0 ? 1 : 0;
-	passeds += strcmp(list[2], "Francisco") == 0 ? 1 : 0;
-	passeds += strcmp(list[3], "Filho")     == 0 ? 1 : 0;
+	test_splited(list[0], "Ovídio");
+	test_splited(list[1], "José");
+	test_splited(list[2], "Francisco");
+	test_splited(list[3], "Filho");
+
 
 	return 1;
 }
@@ -331,7 +342,9 @@ void test_the_cosines() {
 }
 
 
-double test_similarities(char* s1, char* s2) {
+double test_similarities(char* s1, char* s2, double expected) {
+	count++;
+
 	char  phon1[strlen(s1)];
 	phonBr(s1, phon1);
 	
@@ -339,11 +352,35 @@ double test_similarities(char* s1, char* s2) {
 	phonBr(s2, phon2);
 
 
-	printf("%s = %s\n", phon1, phon2);
+	double simi = cosine(phon1, phon2);
 
-	return 0;
+	double dif = simi - expected;
+	if (dif < 0) dif = -dif;
+
+	if(dif < 0.001) {
+		passeds++;
+	}
+	else {
+		printf("Simi between %s & \n%s\n is %f. \n But expected is %f", phon1, phon2, simi, expected);
+	}
+
+	return simi;
 }
 
+void test_the_similarities() {
+	test_similarities("ovidio", "ovídio josé francisco", 0.577);
+
+	test_similarities("O xamã Natan realizou um ritual místico na choupana da floresta.", 
+					  "O chamam Natã realisou um rituau mistico na xoupana da floresta.", 1);
+
+	test_similarities("O campeão de xadrez trocou olhares com o xerife, enquanto a chama das paixões ardia intensamente", 
+					  "O campeaum de chadres trocol olhares com o xerife, enquanto a chama das paixoins ardia intençamente", 1);
+
+	test_similarities("Os corações dos leões na imensidão da selva", 
+					  "Os coraçoins dos leoins na imensidãum da selva", 1);
+
+
+}
 
 int main() {
 
@@ -353,13 +390,12 @@ int main() {
 	init_cosine_buffers(100);	
 
 
-	/* test_the_clean();     */
+	test_the_clean();    
 	test_the_phonetics();
-	/* test_splits();        */
-	/* test_the_equals();    */
-	/* test_the_cosines(); */
-	/* test_similarities("ovidio", "ovídio"); */
-
+	test_splits();       
+	test_the_equals();   
+	test_the_cosines();
+	test_the_similarities();
 
 	deinit_cosine_buffers();
 	deinit();

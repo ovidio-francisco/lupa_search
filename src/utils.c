@@ -33,7 +33,7 @@ double cosine(char* s1, char* s2) {
 	make_frequency_vectors(s1, cosine_counts1, cosine_tokens, cosine_sentence_tokens);
 	make_frequency_vectors(s2, cosine_counts2, cosine_tokens, cosine_sentence_tokens);
 	
-	int dot = 0;
+	int    dot   = 0;
 	double mag_A = 0;
 	double mag_B = 0;
 
@@ -51,20 +51,6 @@ double cosine(char* s1, char* s2) {
 
 
 
-int equals(char* s1, char* s2) {
-	int i = 0;
-
-	while (s1[i] || s2[i]) {
-		if(s1[i] != s2[i]) {
-			return 0;
-		}
-		i++;	
-	}
-
-	return 1;
-}
-
-
 void split(char* str, char** list) {
 
 	int i=0;
@@ -75,7 +61,7 @@ void split(char* str, char** list) {
 	while (str[i]) {
 
 		if(str[i] == ' ') {
-			str[i] = '\0';
+			/* str[i] = '\0'; */
 			list[++j] = &str[i+1];
 		}
 
@@ -84,6 +70,22 @@ void split(char* str, char** list) {
 
 	list[++j] = 0;
 }
+
+int equals(char* s1, char* s2) {
+	int i = 0;
+
+	/* while (s1[i] || s2[i]) { */
+
+	while ( (s1[i] && s1[i]!=' ') || (s2[i] && s2[i]!=' ') ) {
+		if(s1[i] != s2[i]) {
+			return 0;
+		}
+		i++;	
+	}
+
+	return 1;
+}
+
 
 
 char*  trim(char* str, int end) {
