@@ -214,7 +214,6 @@ char* phonBr(char* text, char *result) {
 		}
 
 
-
 		/* --- Add the char --- */
 
 		if (c < 127) {
@@ -224,4 +223,7 @@ char* phonBr(char* text, char *result) {
 
 	return result;
 }
+
+
+
 
