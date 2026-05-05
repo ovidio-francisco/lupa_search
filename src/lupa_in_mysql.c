@@ -1,69 +1,32 @@
 #include "lupa_in_mysql.h"
 #include "lupa.h"
+#include "mariadb_com.h"
 #include "phoneticBr.h"
-#include <ctype.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include <stdio.h>
-
-/* #include "utils.h" */
 #include "buffers.h"
 
-char *output_text;
 
 
-double lupa_similarity(UDF_INIT *initid, UDF_ARGS *args, char *result,
-		unsigned long *length, char *is_null, char *error) {
 
-    if (args->args[0] == NULL || args->args[1] == NULL) {
-        *is_null = 1;
-        return 0.0;
-    }
+char *alloc_output(UDF_INIT *initid, size_t size) {
 
-	/* char  phon1[strlen(args->args[0])]; */
-	/* char  phon2[strlen(args->args[1])]; */
-	
-	/* phonBr(args->args[0], phon1); */
-	/* phonBr(args->args[1], phon2); */
-	
-	/* return cosine(phon1, phon2); */
+	free_output(initid);
 
-	return similarity(args->args[0], args->args[1]);
+	initid->ptr = malloc(size);
+
+	return initid->ptr;
 }
 
 
-
-char *lupa_clear(UDF_INIT *initid, UDF_ARGS *args, char *result,
-		unsigned long *length, char *is_null, char *error) {
-
-	char *input_text = args->args[0];
-
-	clear(input_text, output_text);
-
-	initid->ptr = (char*)output_text;
-	*length = strlen(output_text);
-
-	return output_text;
+void free_output(UDF_INIT *initid) {
+	if (initid->ptr) {
+		free(initid->ptr);
+		initid->ptr = NULL;
+	}
 }
-
-
-char *lupa_phoneticBr(UDF_INIT *initid, UDF_ARGS *args, char *result,
-		unsigned long *length, char *is_null, char *error) {
-
-	char *input_text = args->args[0];
-
-	phonBr(input_text, output_text);
-
-	initid->ptr = (char*)output_text;
-	*length = strlen(output_text);
-
-	/* output_text[1] = '!'; // Just for test if it make any change. */
-
-	return output_text;
-}
-
-
 
 
 char lupa_similarity_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
@@ -79,26 +42,99 @@ void lupa_similarity_deinit(UDF_INIT *initid) {
 }
 
 
+double lupa_similarity(UDF_INIT *initid, UDF_ARGS *args, char *is_null, char *error) {
 
+    if (args->args[0] == NULL || args->args[1] == NULL) {
+        *is_null = 1;
+        return 0.0;
+    }
 
-char lupa_phoneticBr_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
-	return init_data();
+	return similarity(args->args[0], args->args[1]);
 }
 
-void lupa_phoneticBr_deinit(UDF_INIT *initid) {
-	deinit_data(initid);
-}
+
+
+
+
 
 
 
 
 char lupa_clear_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
+
+	initid->ptr = alloc_output(initid, 1024);
+
+	if (!initid->ptr) {
+		strcpy(message, "Error on alloc lupa_clear buffer");
+		return 1;
+	}
+
 	return init_data();
 }
 
 void lupa_clear_deinit(UDF_INIT *initid) {
-	deinit_data(initid);
+	deinit_data();
+
+	free_output(initid);
 }
+
+char *lupa_clear(UDF_INIT *initid, UDF_ARGS *args, char *result,
+		unsigned long *length, char *is_null, char *error) {
+
+	if(args->args[0] == NULL) {
+		*is_null = 1;
+		return NULL;
+	}
+
+	clear(args->args[0], initid->ptr);
+	*length = strlen(initid->ptr);
+
+	return initid->ptr;
+}
+
+
+
+
+
+
+char lupa_phoneticBr_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
+	
+	initid->ptr = alloc_output(initid, 1024);
+
+	if (!initid->ptr) {
+		strcpy(message, "Error on alloc lupa_clear buffer");
+		return 1;
+	}
+
+
+	return init_data();
+}
+
+void lupa_phoneticBr_deinit(UDF_INIT *initid) {
+
+	deinit_data();
+
+	free_output(initid);
+}
+
+char *lupa_phoneticBr(UDF_INIT *initid, UDF_ARGS *args, char *result,
+		unsigned long *length, char *is_null, char *error) {
+
+	if(args->args[0] == NULL) {
+		*is_null = 1;
+		return result;
+	}
+
+	phonBr(args->args[0], result);
+	*length = strlen(result);
+
+	return result;
+}
+
+
+
+
+
 
 
 
@@ -108,27 +144,11 @@ char init_data() {
 		return 1;       // Failure;
 	} 
 
-	if(output_text == NULL) {
-		output_text = (char *)malloc((1024) * sizeof(char));
-
-		if(output_text == NULL) {
-			return 2; // Failure;
-		}
-	}
-
 	return 0;
 }
 
 
-void deinit_data(UDF_INIT *initid) {
-	if (initid->ptr != NULL) {
-		free(initid->ptr);
-		initid->ptr = NULL;
-	}
-	if (output_text != NULL) {
-		free(output_text);
-		output_text = NULL;
-	}
+void deinit_data() {
 
 	deinit(); // lupa deinit
 }
