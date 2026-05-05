@@ -1,5 +1,6 @@
 CC=gcc
 CFLAGS=-I./include -Wall -Wno-char-subscripts
+CFLAGS = -I./include -I/usr/include/mysql -I/usr/include/mariadb -Wall -Wno-char-subscripts
 SRC=./src/
 BUILD=./build/
 COMPILE=@$(CC) $(CFLAGS)
@@ -27,8 +28,13 @@ debug: $(SRC)debug.c $(BUILD)lupa.o $(BUILD)buffers.o $(BUILD)utils.o $(BUILD)ph
 
 
 liblupa_mysql.so: $(SRC)lupa_in_mysql.c $(BUILD)lupa.o $(BUILD)buffers.o $(BUILD)utils.o $(BUILD)phoneticBr.o
-	$(COMPILE) -fPIC -shared -I/usr/include/mysql $^ -o $(BUILD)liblupa_mysql.so
+	$(COMPILE) -fPIC -shared $^ -o $(BUILD)liblupa_mysql.so
 	@echo "[ OK ] $@"
+
+
+
+
+
 
 
 $(BUILD)utils.o: $(SRC)utils.c 
