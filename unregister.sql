@@ -1,0 +1,3 @@
+DROP FUNCTION IF EXISTS lupa_similarity;
+DROP FUNCTION IF EXISTS lupa_clear;
+DROP FUNCTION IF EXISTS lupa_phoneticBr;
