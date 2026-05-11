@@ -1,3 +1,4 @@
 -I./include 
 -I/usr/include/mysql
 -I/usr/include/mariadb
+-I/usr/include/mariadb/server
