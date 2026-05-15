@@ -1,0 +1,40 @@
+Paste your current lupa_in_mysql.c — specifically the _init functions and any alloc_output or initid->ptr usage — and I'll tell you exactly what to look at.
+
+
+
+1 — lupa_clear buffer is fixed at 1024
+cinitid->ptr = alloc_output(initid, 1024);
+If the input string is longer than 1024 bytes this silently corrupts memory. The right approach is to allocate based on input length — but you don't know it at _init time.
+Two options:
+
+allocate MAX_ALLOWED_PACKET (16MB) — wasteful but safe
+allocate in the main function instead, using args->lengths[0]
+
+Which do you prefer?
+
+2 — lupa_phoneticBr writes to result instead of initid->ptr
+cphonBr(args->args[0], result);  // ❌ result is a 255-byte server buffer
+return result;
+result is a small fixed buffer provided by the server (~255 bytes). You allocated initid->ptr for a reason — use it:
+cphonBr(args->args[0], initid->ptr);  // ✅
+*length = strlen(initid->ptr);
+return initid->ptr;
+
+3 — lupa_similarity_init doesn't validate argument count
+cchar lupa_similarity_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
+    init();
+    init_cosine_buffers(100);
+    return 0;
+}
+If called with wrong number of args the server will crash or produce garbage. Add:
+cif (args->arg_count != 2) {
+    strcpy(message, "lupa_similarity requires exactly 2 arguments");
+    return 1;
+}
+
+4 — init_cosine_buffers(100) — what does 100 mean?
+Is that a max string length? If so, strings longer than 100 will silently truncate or overflow. Worth a comment at minimum, possibly a constant:
+c#define LUPA_MAX_COSINE_LEN 100
+init_cosine_buffers(LUPA_MAX_COSINE_LEN);
+
+Fix lupa_phoneticBr first — that's the most dangerous one. Want to tackle them in order?

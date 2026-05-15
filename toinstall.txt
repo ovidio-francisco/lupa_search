@@ -1,0 +1,37 @@
+supose a fresh machine.
+how to install it on mariadb?
+
+May 13
+Claude responded: Good question — this should go in your README.
+Good question — this should go in your README.md. The full flow on a fresh machine:
+
+bash
+# 1 — install dependencies
+sudo apt install gcc make libmariadbd-dev mariadb-server
+
+# 2 — start the server
+sudo systemctl start mariadb
+
+# 3 — clone and build
+git clone <your-repo>
+cd lupa_search
+make plugin
+
+# 4 — install the .so
+make install
+
+# 5 — load the plugin
+mysql -u root -p -e "INSTALL PLUGIN lupa SONAME 'lupa.so';"
+
+# 6 — register the UDFs
+make register
+And to verify:
+
+bash
+mysql -u root -p -e "SHOW PLUGINS;" | grep lupa
+make check
+Two things worth adding to your repo for this to work smoothly:
+
+a make uninstall target that runs UNINSTALL PLUGIN + DROP FUNCTION
+document the make register / make unregister targets in README.md
+Want to wire up uninstall next?

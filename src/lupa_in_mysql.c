@@ -30,15 +30,15 @@ void free_output(UDF_INIT *initid) {
 
 
 char lupa_similarity_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
-	init();
-	init_cosine_buffers(100);	
+	/* init(); */
+	/* init_cosine_buffers(100);	 */
 
 	return 0;
 }
 
 void lupa_similarity_deinit(UDF_INIT *initid) {
-	deinit_cosine_buffers();
-	deinit();
+	/* deinit_cosine_buffers(); */
+	/* deinit(); */
 }
 
 
@@ -69,11 +69,13 @@ char lupa_clear_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
 		return 1;
 	}
 
-	return init_data();
+	return 0;
+
+	/* return init_data(); */
 }
 
 void lupa_clear_deinit(UDF_INIT *initid) {
-	deinit_data();
+	/* deinit_data(); */
 
 	free_output(initid);
 }
@@ -106,13 +108,14 @@ char lupa_phoneticBr_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
 		return 1;
 	}
 
+	return 0;
 
-	return init_data();
+	/* return init_data(); */
 }
 
 void lupa_phoneticBr_deinit(UDF_INIT *initid) {
 
-	deinit_data();
+	/* deinit_data(); */
 
 	free_output(initid);
 }
@@ -125,10 +128,10 @@ char *lupa_phoneticBr(UDF_INIT *initid, UDF_ARGS *args, char *result,
 		return result;
 	}
 
-	phonBr(args->args[0], result);
-	*length = strlen(result);
+	phonBr(args->args[0], initid->ptr);
+	*length = strlen(initid->ptr);
 
-	return result;
+	return initid->ptr;
 }
 
 
@@ -139,19 +142,19 @@ char *lupa_phoneticBr(UDF_INIT *initid, UDF_ARGS *args, char *result,
 
 
 
-char init_data() {
-	if (init() != 0) {  // lupa init
-		return 1;       // Failure;
-	} 
+/* char init_data() { */
+	/* if (init() != 0) {  // lupa init */
+		/* return 1;       // Failure; */
+	/* }  */
 
-	return 0;
-}
+	/* return 0; */
+/* } */
 
 
-void deinit_data() {
+/* void deinit_data() { */
 
-	deinit(); // lupa deinit
-}
+	/* deinit(); // lupa deinit */
+/* } */
 
 
 /* https://dev.mysql.com/doc/extending-mysql/8.0/en/adding-loadable-function.html */

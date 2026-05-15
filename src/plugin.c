@@ -1,4 +1,6 @@
 #include <mysql/plugin.h>
+#include "lupa.h"
+#include "buffers.h"
 
 #ifndef MARIADB_BASE_VERSION
 #include <mysql/udf_registration_types.h>
@@ -20,6 +22,11 @@ char *lupa_phoneticBr(UDF_INIT *initid, UDF_ARGS *args, char *result,
 
 static int lupa_plugin_init(void *arg __attribute__((unused))) { 
 
+	init();
+	init_cosine_buffers(100);	
+
+
+
 #ifdef MARIADB_BASE_VERSION 
 	return 0;
 #else
@@ -38,21 +45,20 @@ static int lupa_plugin_init(void *arg __attribute__((unused))) {
 
 	return 0; 
 #endif
+
 }
 
 static int lupa_plugin_deinit(void *arg __attribute__((unused))) { 
 
-#ifdef MARIADB_BASE_VERSION 
-	return 0;
-#else
-
+#ifndef MARIADB_BASE_VERSION 
 	mysql_udf_unregister("lupa_similarity", REAL_RESULT);
 	mysql_udf_unregister("lupa_clear", STRING_RESULT);
-	mysql_udf_unregister("lupa_phonetic", STRING_RESULT);
-
-
-	return 0; 
+	mysql_udf_unregister("lupa_phoneticBr", STRING_RESULT);
 #endif
+
+	deinit_cosine_buffers();
+	deinit();
+	return 0; 
 }
 
 static struct st_mysql_daemon lupa_descriptor = {
