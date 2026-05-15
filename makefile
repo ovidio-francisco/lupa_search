@@ -3,14 +3,14 @@
 # | '_ ` _ \ / _` | |/ / _ \ |_| | |/ _ \
 # | | | | | | (_| |   <  __/  _| | |  __/
 # |_| |_| |_|\__,_|_|\_\___|_| |_|_|\___|
+#
 
 
 
 CC=gcc
 
-MYSQL_PLUGIN_DIR ?= $(shell mysqld --verbose --help 2>/dev/null | grep "^plugin-dir" | awk '{print $$2}' \
-					     || mariadbd --verbose --help 2>/dev/null | grep "^plugin-dir" | awk '{print $$2}' \
-                         || echo /usr/lib/mysql/plugin)
+_GET_PLUGIN_DIR = --verbose --help 2>/dev/null | grep "^plugin-dir" | awk '{print $$2}'
+MYSQL_PLUGIN_DIR ?= $(shell mysqld $(_GET_PLUGIN_DIR) || mariadbd $(_GET_PLUGIN_DIR) || echo /usr/lib/mysql/plugin)
 
 MYSQL_INCLUDE ?= $(shell pkg-config --cflags mysqlclient 2>/dev/null || pkg-config --cflags mariadb 2>/dev/null)
 MYSQL_LIBS ?= $(shell pkg-config --libs mysqlclient 2>/dev/null || pkg-config --libs mariadb 2>/dev/null)
@@ -27,11 +27,11 @@ DEBUG=$(BUILD)debug
 MYSQL_LIB=$(BUILD)liblupa_mysql.so
 MYSQL_PLUGIN_LIB=$(BUILD)lupa.so
 
-MYSQL_CMD ?= $(shell which sudo mysql 2>/dev/null || echo "mysql -u root -p")
+MYSQL_CMD ?= sudo mysql
 
 
 
-all: main unitytests debug liblupa_mysql.so
+all: main unitytests plugin
 	@echo "Make completed successfully!"
 
 unitytests: $(SRC)tests.c $(BUILD)lupa.o $(BUILD)utf8_utils.o $(BUILD)buffers.o $(BUILD)utils.o $(BUILD)phoneticBr.o
@@ -85,7 +85,7 @@ build:
 	@mkdir -p $(BUILD)
 
 clean:
-	rm -rvf $(TESTS) $(MAIN) $(BUILD)*.o $(BUILD)
+	rm -rvf $(TESTS) $(MAIN) $(BUILD)*.o $(BUILD)*.so $(BUILD)
 
 tests: unitytests
 	@echo "Running $(TESTS)"
@@ -101,9 +101,30 @@ dir:
 	@echo "PLUGIN_DIR = $(MYSQL_PLUGIN_DIR)"
 
 
-install: 
+install: plugin
+	@echo "[ .. ] Installing"
+	@echo "[ .. ] Copying plugin to $(MYSQL_PLUGIN_DIR)"
 	@sudo cp $(MYSQL_PLUGIN_LIB) $(MYSQL_PLUGIN_DIR)
+	@echo "[ .. ] Restarting the server"
+	@sudo systemctl restart mysql 2>/dev/null || sudo systemctl restart mariadb
+	@echo "[ .. ] Uninstalling old plugin"
+	@$(MYSQL_CMD) -e "UNINSTALL PLUGIN IF EXISTS lupa;"
+	@echo "[ .. ] Installing plugin"
+	@$(MYSQL_CMD) -e "INSTALL PLUGIN lupa SONAME 'lupa.so';"
+	@echo "[ .. ] Registering UDFs"
+	@$(MAKE) -s register
 	@echo "[ OK ] Installed at $(MYSQL_PLUGIN_DIR)"
+
+uninstall:
+	@echo "[ .. ] Uninstalling"
+	@echo "[ .. ] Unregistering UDFs"
+	@$(MAKE) -s unregister
+	@echo "[ .. ] Uninstalling plugin"
+	@$(MYSQL_CMD) -e "UNINSTALL PLUGIN IF EXISTS lupa;"
+	@echo "[ .. ] Deleting $(MYSQL_PLUGIN_LIB)"
+	@sudo rm -f $(MYSQL_PLUGIN_DIR)/$(notdir $(MYSQL_PLUGIN_LIB))
+	@echo "[ OK ] Uninstalled at $(MYSQL_PLUGIN_DIR)"
+
 
 register:
 	$(MYSQL_CMD) < register.sql
@@ -117,11 +138,12 @@ check:
 	$(MYSQL_CMD) -e "$$QUERY"
 
 test-sql:
-	$(MYSQL_CMD) < teste.sql
+	@echo "--- Running tests from teste.sql on MySQL/MariaDB ---"
+	@$(MYSQL_CMD) < teste.sql
 
 
 
-.PHONY: build clean run debug dir install plugin
+.PHONY: build clean run debug dir install uninstall plugin register unregister check test-sql tests deb
 
 
 
