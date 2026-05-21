@@ -27,15 +27,12 @@ void free_output(UDF_INIT *initid) {
 
 
 char lupa_similarity_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
-	/* init(); */
-	/* init_cosine_buffers(100);	 */
 
 	return 0;
 }
 
 void lupa_similarity_deinit(UDF_INIT *initid) {
-	/* deinit_cosine_buffers(); */
-	/* deinit(); */
+
 }
 
 
@@ -59,7 +56,9 @@ double lupa_similarity(UDF_INIT *initid, UDF_ARGS *args, char *is_null, char *er
 
 char lupa_clear_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
 
-	initid->ptr = alloc_output(initid, LUPA_OUTPUT_BUFFER_SIZE);
+	// Alloc here to thread safetty
+	size_t size = args->lengths[0] + 1; // +1 for null terminator
+	initid->ptr = alloc_output(initid, size);
 
 	if (!initid->ptr) {
 		strcpy(message, "Error on alloc lupa_clear buffer");
@@ -67,8 +66,6 @@ char lupa_clear_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
 	}
 
 	return 0;
-
-	/* return init_data(); */
 }
 
 void lupa_clear_deinit(UDF_INIT *initid) {
@@ -98,7 +95,8 @@ char *lupa_clear(UDF_INIT *initid, UDF_ARGS *args, char *result,
 
 char lupa_phoneticBr_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
 	
-	initid->ptr = alloc_output(initid, LUPA_OUTPUT_BUFFER_SIZE);
+	size_t size = args->lengths[0] + 1; // +1 for null terminator
+	initid->ptr = alloc_output(initid, size);
 
 	if (!initid->ptr) {
 		strcpy(message, "Error on alloc lupa_clear buffer");
