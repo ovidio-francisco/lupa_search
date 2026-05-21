@@ -6,9 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "buffers.h"
-
-
 
 
 char *alloc_output(UDF_INIT *initid, size_t size) {
@@ -62,7 +59,7 @@ double lupa_similarity(UDF_INIT *initid, UDF_ARGS *args, char *is_null, char *er
 
 char lupa_clear_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
 
-	initid->ptr = alloc_output(initid, 1024);
+	initid->ptr = alloc_output(initid, LUPA_OUTPUT_BUFFER_SIZE);
 
 	if (!initid->ptr) {
 		strcpy(message, "Error on alloc lupa_clear buffer");
@@ -101,7 +98,7 @@ char *lupa_clear(UDF_INIT *initid, UDF_ARGS *args, char *result,
 
 char lupa_phoneticBr_init(UDF_INIT *initid, UDF_ARGS *args, char *message) {
 	
-	initid->ptr = alloc_output(initid, 1024);
+	initid->ptr = alloc_output(initid, LUPA_OUTPUT_BUFFER_SIZE);
 
 	if (!initid->ptr) {
 		strcpy(message, "Error on alloc lupa_clear buffer");
@@ -141,23 +138,6 @@ char *lupa_phoneticBr(UDF_INIT *initid, UDF_ARGS *args, char *result,
 
 
 
-
-/* char init_data() { */
-	/* if (init() != 0) {  // lupa init */
-		/* return 1;       // Failure; */
-	/* }  */
-
-	/* return 0; */
-/* } */
-
-
-/* void deinit_data() { */
-
-	/* deinit(); // lupa deinit */
-/* } */
-
-
-/* https://dev.mysql.com/doc/extending-mysql/8.0/en/adding-loadable-function.html */
 
 
 

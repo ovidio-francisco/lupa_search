@@ -21,3 +21,4 @@ sudo cp build/liblupa_mysql.so /usr/lib/mysql/plugin/
 <!-- Analizer -->
 
 
+<!-- https://dev.mysql.com/doc/extending-mysql/8.0/en/adding-loadable-function.html -->

@@ -3,6 +3,8 @@
 #include <mysql.h>
 
 
+// TODO: larger or dynamic allocation based on args->lengths[0].
+#define LUPA_OUTPUT_BUFFER_SIZE 1024
 
 char *alloc_output(UDF_INIT *initid, size_t size);
 void free_output(UDF_INIT *initid);
