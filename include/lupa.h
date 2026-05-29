@@ -53,7 +53,7 @@ char   deinit();
 char   deinit_valids();
 char   deinit_char_types();
 double similarity(char* s1, char* s2);
-char*  clear(char* s, char* d);
+char*  clear(char* s, int slen, char* d);
 char   get_clean(char*s, int i, int* jmp);
 
 

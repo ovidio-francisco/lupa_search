@@ -78,7 +78,7 @@ $(BUILD)phoneticBr.o: $(SRC)phoneticBr.c
 	@echo "[ OK ] $@"
 
 $(BUILD)lupa.o: $(SRC)lupa.c build 
-	$(COMPILE) -c $(SRC)lupa.c -o $(BUILD)lupa.o
+	$(COMPILE) -fPIC -c $(SRC)lupa.c -o $(BUILD)lupa.o
 	@echo "[ OK ] $@"
 
 build:

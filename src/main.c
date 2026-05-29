@@ -18,7 +18,7 @@ int main() {
 	scanf("%[^\n]s", input);
 	printf("\n");
 
-	clear(input, result);
+	clear(input, strlen(input), result);
 	printf("Input     = %s\n", input);
 	printf("Cleaned   = %s\n", result);
 	

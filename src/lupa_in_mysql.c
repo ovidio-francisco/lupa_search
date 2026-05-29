@@ -82,7 +82,7 @@ char *lupa_clear(UDF_INIT *initid, UDF_ARGS *args, char *result,
 		return NULL;
 	}
 
-	clear(args->args[0], initid->ptr);
+	clear(args->args[0], args->lengths[0], initid->ptr);
 	*length = strlen(initid->ptr);
 
 	return initid->ptr;

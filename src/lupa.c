@@ -189,7 +189,7 @@ char get_clean(char*s, int i, int* jmp) {
 
 // TODO: rever o clear e o trim.
 
-char* clear(char* s, char* d) {
+char* clear(char* s, int slen, char* d) { // can we strip this uggly slen?
 
 	int i=0, j=0, jmp=0;
 	unsigned char valid;
@@ -214,7 +214,7 @@ char* clear(char* s, char* d) {
 			}while((unsigned char)s[i] >= 127 && (unsigned char)s[i] < 192);
 		}
 
-	} while(s[i]);
+	} while(i < slen);
 		
 
 	d[j] = 0;
