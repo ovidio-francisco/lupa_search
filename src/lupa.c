@@ -30,11 +30,15 @@ static char* chars_types;
 
 double similarity(char* s1, char* s2) {
 /* TODO: use buffers to the phonetizids */
-	char  phon1[strlen(s1)];
-	char  phon2[strlen(s2)];
+
+	size_t ls1 = strlen(s1);
+	size_t ls2 = strlen(s2);
+
+	char  phon1[ls1];
+	char  phon2[ls2];
 	
-	phonBr(s1, phon1);
-	phonBr(s2, phon2);
+	phonBr(s1, ls1, phon1);
+	phonBr(s2, ls2, phon2);
 	
 	return cosine(phon1, phon2);
 }
@@ -188,6 +192,12 @@ char get_clean(char*s, int i, int* jmp) {
 
 
 // TODO: rever o clear e o trim.
+
+
+/*
+ * The input (args->args[0]) string may not be a C null terminated string,
+ *     so, strlen can fails. We need to explicit pass its length.
+ */
 
 char* clear(char* s, int slen, char* d) { // can we strip this uggly slen?
 

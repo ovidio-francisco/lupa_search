@@ -35,8 +35,46 @@
 }
 
 
+/*
+ * The input (args->args[0]) string may not be a C null terminated string,
+ *     so, strlen can fails. We need to explicit pass its length.
+ */
 
-char* phonBr(char* text, char *result) {
+
+/*
+Vinícius Melo    -- slen=14
+Vinícius Melo    -- slen=14
+José Miguel Melo -- slen=17
+José Miguel Melo -- slen=17
+Lavínia MeloMelo -- slen=13
+Lavínia MeloMelo -- slen=13
+Júlia MeloloMelo -- slen=11
+Júlia MeloloMelo -- slen=11
+Ísis MelooloMelo -- slen=10
+Ísis MelooloMelo -- slen=10
+Lívia MeloloMelo -- slen=11
+Lívia MeloloMelo -- slen=11
+Lavínia MeloMelo -- slen=13
+Lavínia MeloMelo -- slen=13
+João Felipe Melo -- slen=17
+João Felipe Melo -- slen=17
+Théo Melope Melo -- slen=10
+Théo Melope Melo -- slen=10
+Ísis Melope Melo -- slen=10
+Ísis Melope Melo -- slen=10
+Antônio MeloMelo -- slen=13
+Antônio MeloMelo -- slen=13
+
+bug aqui mesmo?
+estaria mariadb correta?
+
+testar no main
+*/
+
+
+
+
+char* phonBr(char* text, int slen, char *result) {
 	unsigned char c, next, prev;
 	int i, j, jmp;
 
@@ -46,9 +84,10 @@ char* phonBr(char* text, char *result) {
 
 	next = get_clean(text, i, &jmp);
 	
-	i+=jmp;
 
-	for(; c; i+=jmp) {
+	fprintf(stderr, "\n--- [phonBr] --- Text=%s -- slen=%d\n", text, slen);
+
+	for(; c && j<slen; i+=jmp) {
 		
 		prev = c;
 		c    = next;
@@ -220,6 +259,15 @@ char* phonBr(char* text, char *result) {
 			result[j++] = c;
 		}
 	}
+
+	// Parei aqui
+	// Como saber onde é o fim da String?
+	// Fazer track de toda vez que adicionar algo a result?
+	// Usando macros
+	// Alterar ADD para não dar continue
+	// Criar ADD_CONTINUE
+	// Meio que encapsular result (e j???)
+	result[j-1] = 0; 
 
 	return result;
 }

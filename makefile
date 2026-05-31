@@ -91,7 +91,7 @@ tests: unitytests
 	@echo "Running $(TESTS)"
 	@$(TESTS)
 
-run:
+run: main
 	$(MAIN)
 
 deb: debug

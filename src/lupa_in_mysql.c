@@ -123,7 +123,7 @@ char *lupa_phoneticBr(UDF_INIT *initid, UDF_ARGS *args, char *result,
 		return result;
 	}
 
-	phonBr(args->args[0], initid->ptr);
+	phonBr(args->args[0], args->lengths[0], initid->ptr);
 	*length = strlen(initid->ptr);
 
 	return initid->ptr;
