@@ -74,7 +74,7 @@ testar no main
 
 
 
-char* phonBr(char* text, int slenx, char *result) {
+char* phonBr(char* text, int slen, char *result) {
 	unsigned char c, next, prev;
 	int i, j, jmp;
 
@@ -268,7 +268,7 @@ char* phonBr(char* text, int slenx, char *result) {
 	// Alterar ADD para não dar continue
 	// Criar ADD_CONTINUE
 	// Meio que encapsular result (e j???)
-	result[j-1] = 0; 
+	/* result[j-1] = 0;  */
 
 	return result;
 }
