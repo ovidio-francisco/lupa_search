@@ -74,7 +74,7 @@ testar no main
 
 
 
-char* phonBr(char* text, int slen, char *result) {
+char* phonBr(char* text, int slenx, char *result) {
 	unsigned char c, next, prev;
 	int i, j, jmp;
 
@@ -84,10 +84,11 @@ char* phonBr(char* text, int slen, char *result) {
 
 	next = get_clean(text, i, &jmp);
 	
+	i+=jmp;
 
-	fprintf(stderr, "\n--- [phonBr] --- Text=%s -- slen=%d\n", text, slen);
+	/* fprintf(stderr, "\n--- [phonBr] --- Text=%s -- slen=%d\n", text, slen); */
 
-	for(; c && j<slen; i+=jmp) {
+	for(; c ; i+=jmp) {
 		
 		prev = c;
 		c    = next;

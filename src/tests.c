@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdio.h>
 #include <string.h>
 #include "lupa.h"
@@ -13,8 +14,9 @@ int test_clean(char* original, char* expected, char* msg) {
 
 	count++;
 
-	char  buffer[strlen(original)];
-	char* cleaned = clear(original, buffer);
+	size_t len = strlen(original);
+	char  buffer[len];
+	char* cleaned = clear(original, len, buffer);
 
 	int result = strcmp(expected, cleaned) == 0;
 	passeds += result;
@@ -39,8 +41,9 @@ int test_phonetic(char* original, char* expected, char* msg) {
 	
 	count++;
 
-	char  buffer[strlen(original)];
-	char* phonetic = phonBr(original, buffer);
+	size_t len = strlen(original);
+	char  buffer[len];
+	char* phonetic = phonBr(original, len, buffer);
 
 	int result = strcmp(expected, phonetic) == 0;
 	

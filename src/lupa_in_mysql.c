@@ -123,6 +123,11 @@ char *lupa_phoneticBr(UDF_INIT *initid, UDF_ARGS *args, char *result,
 		return result;
 	}
 
+	// Setting the null terminator manually, once MariaDB didn't
+	// Worked so far, but its dangerous
+	// We are handing some memory we don't own
+	args->args[0][args->lengths[0]] = 0;
+
 	phonBr(args->args[0], args->lengths[0], initid->ptr);
 	*length = strlen(initid->ptr);
 
