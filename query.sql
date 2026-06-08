@@ -9,7 +9,7 @@ use Test_LUPA;
 
 
 SELECT nome, length(nome), lupa_phoneticBr(nome), length(lupa_phoneticBr(nome))  
-	from Peoples 
+	from People
 	where id in (313 , 660 , 3396 , 4941 , 5710 , 6673 , 7743 , 8190 , 8836 , 9745 , 9987);
 
 
