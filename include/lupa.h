@@ -1,8 +1,8 @@
 #ifndef LUPA_H
 #define LUPA_H
 
-#define EXTENDED "âãäáàêẽëéèîĩïíìôõöóòûũüúùyŷỹÿýỳçℤÂÃÄÁÀÊẼËÉÈÎĨÏÍÌÔÕÖÓÒÛŨÜÚÙYŶỸŸÝỲÇ.,:;!@?-€"
-#define REDUCED  "AAAAAEEEEEIIIIIOOOOOUUUUUIIIIII{ZAAAAAEEEEEIIIIIOOOOOUUUUUIIIIII{        E" 
+#define EXTENDED "âãäáàêẽëéèîĩïíìôõöóòûũüúùyŷỹÿýỳçℤÂÃÄÁÀÅÊẼËÉÈÎĨÏÍÌÔÕÖÓÒÛŨÜÚÙYŶỸŸÝỲÇ.,:;!@?-€"
+#define REDUCED  "AAAAAEEEEEIIIIIOOOOOUUUUUIIIIIISZAAAAAAEEEEEIIIIIOOOOOUUUUUIIIIIIS        E" 
 
 
 #define _A 'A'
