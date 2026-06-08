@@ -1,7 +1,6 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 #include "lupa.h"
 #include "phoneticBr.h"
 
@@ -35,9 +34,35 @@ int main() {
  * 
  */
 
-	char text[] = "tancredo do do do la";
+	char text[] = "queijo";
 
 	test(text, strlen(text), result);
+
+
+
+/*
+ *     char text[] = "girafa";
+ * 
+ *     test(text, strlen(text), result);
+ * 
+ * 
+ *     printf("\ntext = '%s'\nphon = '%s'\n", text, result);
+ * 
+ * 
+ *     int res = strcmp(text, "JrAFA") == 0;
+ * 
+ *     if (res) {
+ *         printf("OK!\n");
+ *     }
+ *     else {
+ *         printf("Faiô!\n");
+ *     }
+ */
+
+
+
+
+
 
 
 /*

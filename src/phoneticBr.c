@@ -1,32 +1,25 @@
-#include "utils.h"
 #include "lupa.h"
 #include "phoneticBr.h"
-
 #include <stdio.h>
-
 
 /* **** MACROS like a functions **** */
 
 #define BETWEEN_VOWELS  ( is_vowel(prev) && is_vowel(next) )
 #define NEXT_IS(X,Y) 	( next == (X) || next == (Y) )
 #define IS_LAST         ( next == 0   || next == ' '  )
-#define NEXT2           ( get_clean(text, i+1, &jmp) )
+#define NEXT2           ( get_clean(text, idx+1, &jmp) )
 
 #define REMOVE_NEXTS(X)\
-{\
 	while (next == (X)) {\
-		i += jmp;\
-		next = get_clean(text, i, &jmp);\
+		idx += jmp;\
+		next = get_clean(text, idx, &jmp);\
 	}\
-}
 
 #define X_TO_Y(X,Y)\
-{\
 	if (c == (X))\
 	{ result[j++] = (Y);\
 		continue; \
 	}\
-}
 
 #define ADD(X)\
 {\
@@ -35,64 +28,25 @@
 }
 
 
-/*
- * The input (args->args[0]) string may not be a C null terminated string,
- *     so, strlen can fails. We need to explicit pass its length.
- */
-
-
-/*
-Vinícius Melo    -- slen=14
-Vinícius Melo    -- slen=14
-José Miguel Melo -- slen=17
-José Miguel Melo -- slen=17
-Lavínia MeloMelo -- slen=13
-Lavínia MeloMelo -- slen=13
-Júlia MeloloMelo -- slen=11
-Júlia MeloloMelo -- slen=11
-Ísis MelooloMelo -- slen=10
-Ísis MelooloMelo -- slen=10
-Lívia MeloloMelo -- slen=11
-Lívia MeloloMelo -- slen=11
-Lavínia MeloMelo -- slen=13
-Lavínia MeloMelo -- slen=13
-João Felipe Melo -- slen=17
-João Felipe Melo -- slen=17
-Théo Melope Melo -- slen=10
-Théo Melope Melo -- slen=10
-Ísis Melope Melo -- slen=10
-Ísis Melope Melo -- slen=10
-Antônio MeloMelo -- slen=13
-Antônio MeloMelo -- slen=13
-
-bug aqui mesmo?
-estaria mariadb correta?
-
-testar no main
-*/
-
-
-
-
 char* phonBr(char* text, int slen, char *result) {
 	unsigned char c, next, prev;
-	int i, j, jmp;
+	int idx, j, jmp;
 
-	i=0;
+	idx=0;
 	j=0;
-	c=127;
+	c=1;
 
-	next = get_clean(text, i, &jmp);
-	
-	i+=jmp;
+	next = get_clean(text, idx, &jmp);
+	idx+=jmp;
 
-	/* fprintf(stderr, "\n--- [phonBr] --- Text=%s -- slen=%d\n", text, slen); */
+	/* printf("len=%d\n", slen); */
 
-	for(; c ; i+=jmp) {
+	while(c) {
 		
 		prev = c;
 		c    = next;
-		next = get_clean(text, i, &jmp);
+		next = get_clean(text, idx, &jmp);
+		/* printf("c= '%c' idx=%d\n", c, idx); */
 
 
 		/* --- Rules --- */
@@ -112,6 +66,7 @@ char* phonBr(char* text, int slen, char *result) {
 			}
 		}
 
+
 		if (c == 'R') {
 
 			if ( BETWEEN_VOWELS ) {
@@ -130,14 +85,15 @@ char* phonBr(char* text, int slen, char *result) {
 		/* --- Remove repetitions --- */
 
 		while (c == next) {
-			i += jmp;
-			next = get_clean(text, i, &jmp);
+			idx += jmp;
+			next = get_clean(text, idx, &jmp);
 		}
 
 		/* --- ------------------ --- */
 
 	
 		if (c == 'I' && is_consonant(result[j-1]) && (is_consonant(next) || IS_LAST) ) {
+			idx += jmp;
 			continue;
 		}
 	
@@ -233,7 +189,6 @@ char* phonBr(char* text, int slen, char *result) {
 				result[j++] = _I; 
 				result[j++] = _N; 
 				continue;
-				continue;
 			}
 		}
 
@@ -259,6 +214,8 @@ char* phonBr(char* text, int slen, char *result) {
 		if (c < 127) {
 			result[j++] = c;
 		}
+		
+		idx+=jmp;
 	}
 
 	// Parei aqui
@@ -276,3 +233,46 @@ char* phonBr(char* text, int slen, char *result) {
 
 
 
+/*
+ * The input (args->args[0]) string may not be a C null terminated string,
+ *     so, strlen can fails. We need to explicit pass its length.
+ */
+
+
+/*
+Vinícius Melo    -- slen=14
+Vinícius Melo    -- slen=14
+José Miguel Melo -- slen=17
+José Miguel Melo -- slen=17
+Lavínia MeloMelo -- slen=13
+Lavínia MeloMelo -- slen=13
+Júlia MeloloMelo -- slen=11
+Júlia MeloloMelo -- slen=11
+Ísis MelooloMelo -- slen=10
+Ísis MelooloMelo -- slen=10
+Lívia MeloloMelo -- slen=11
+Lívia MeloloMelo -- slen=11
+Lavínia MeloMelo -- slen=13
+Lavínia MeloMelo -- slen=13
+João Felipe Melo -- slen=17
+João Felipe Melo -- slen=17
+Théo Melope Melo -- slen=10
+Théo Melope Melo -- slen=10
+Ísis Melope Melo -- slen=10
+Ísis Melope Melo -- slen=10
+Antônio MeloMelo -- slen=13
+Antônio MeloMelo -- slen=13
+
+bug aqui mesmo?
+estaria mariadb correta?
+
+testar no main
+*/
+
+
+
+/*
+ * static inline void add(char** text, int* j, char c) {
+ *     (*text)[(*j)++] = c;
+ * }
+ */
