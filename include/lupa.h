@@ -2,7 +2,7 @@
 #define LUPA_H
 
 #define EXTENDED "âãäáàêẽëéèîĩïíìôõöóòûũüúùyŷỹÿýỳçℤÂÃÄÁÀÅÊẼËÉÈÎĨÏÍÌÔÕÖÓÒÛŨÜÚÙYŶỸŸÝỲÇ.,:;!@?-€"
-#define REDUCED  "AAAAAEEEEEIIIIIOOOOOUUUUUIIIIIISZAAAAAAEEEEEIIIIIOOOOOUUUUUIIIIIIS        E" 
+#define REDUCED  "AAAAAEEEEEIIIIIOOOOOUUUUUIIIIII{ZAAAAAAEEEEEIIIIIOOOOOUUUUUIIIIII{        E" 
 
 
 #define _A 'A'
