@@ -52,6 +52,7 @@ int test_phonetic(char* original, char* expected, char* msg) {
 	if (result) return result;
 
 
+	printf("Phonetic:\n");
 	printf("Original = '%s'\n", original);
 	printf("Result   = '%s'\n", phonetic);
 	printf("Expected = '%s'\n", expected);    
@@ -70,6 +71,7 @@ int test_phonetic(char* original, char* expected, char* msg) {
 
 int test_the_clean() {
 
+	test_clean("jjjjoooooseeeeéééêêê", "JOSE", "repetitions");
 	test_clean("abcdABCD", "ABCDABCD", "Just ASCII chars");
 	/* test_clean(EXTENDED, "AEIOUICZAEIOUIC E", "All exchanges"); */
 	/* test_clean("Aí José coração vovô", "AI JOSE CORACAO VOVO", "Basic accents"); */
@@ -85,7 +87,9 @@ int test_the_clean() {
 
 int test_the_phonetics() {
 	
+	test_phonetic("josé", "JOZE", "S between vowels → Z");
 	test_phonetic("jjjjoooooseeeeéééêêê", "JOZE", "S between vowels → Z");
+
 
 	test_phonetic("casa",         "CAZA",      "S between vowels → Z");
 	test_phonetic("casta",        "CASTA",     "vowel + S + consonant → S");

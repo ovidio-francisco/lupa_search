@@ -16,26 +16,17 @@
 	}\
 
 #define X_TO_Y(X,Y)\
-	if (c == (X)) {\
-	    result[j++] = (Y);\
-		STEP;\
+	if (c == (X))\
+	{ result[j++] = (Y);\
 		continue; \
 	}\
 
 #define ADD(X)\
 {\
 	result[j++] = (X);\
-	STEP;\
 	continue;\
 }
 
-#define STEP \
-{\
-		prev = c;\
-		c    = next;\
-		next = get_clean(text, idx, &jmp);\
-		idx+=jmp;\
-}\
 
 char* phonBr(char* text, int slen, char *result) {
 	unsigned char c, next, prev;
@@ -45,15 +36,17 @@ char* phonBr(char* text, int slen, char *result) {
 	j=0;
 	c=1;
 
-	c = get_clean(text, idx, &jmp);
-	idx+=jmp;
-
 	next = get_clean(text, idx, &jmp);
 	idx+=jmp;
 
 	/* printf("len=%d\n", slen); */
+
 	while(c) {
-		printf("text='%s' c= '%c' idx=%d\n", text, c, idx);
+		
+		prev = c;
+		c    = next;
+		next = get_clean(text, idx, &jmp);
+		/* printf("c= '%c' idx=%d\n", c, idx); */
 
 
 		/* --- Rules --- */
@@ -101,7 +94,6 @@ char* phonBr(char* text, int slen, char *result) {
 	
 		if (c == 'I' && is_consonant(result[j-1]) && (is_consonant(next) || IS_LAST) ) {
 			idx += jmp;
-			STEP;
 			continue;
 		}
 	
@@ -109,7 +101,6 @@ char* phonBr(char* text, int slen, char *result) {
 		if (c == 'U') {
 			if( (prev == 'Q' || prev == 'G') && NEXT_IS('E','I') ) {
 				/* just continue */
-				STEP;
 				continue;
 			}	
 		}
@@ -119,7 +110,6 @@ char* phonBr(char* text, int slen, char *result) {
 			if (prev == 'A' && IS_LAST) {
 				result[j++] = _U; 
 				result[j++] = _N; 
-				STEP;
 				continue;
 			}
 			if (next == 'E' && NEXT2 == 'S') { 
@@ -127,7 +117,6 @@ char* phonBr(char* text, int slen, char *result) {
 				result[j++] = _O; 
 				result[j++] = _I; 
 				result[j++] = _N; 
-				STEP;
 				continue;
 			}	
 		}
@@ -216,7 +205,6 @@ char* phonBr(char* text, int slen, char *result) {
 
 		if (c == ' ' && next == 0) {
 			/* just continue */
-			STEP;
 			continue;
 		}
 
@@ -227,7 +215,7 @@ char* phonBr(char* text, int slen, char *result) {
 			result[j++] = c;
 		}
 		
-		STEP;
+		idx+=jmp;
 	}
 
 	// Parei aqui
