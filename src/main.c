@@ -34,7 +34,8 @@ int main() {
  * 
  */
 
-	char text[] = "queijo";
+	/* char text[] = "queijo"; */
+	char text[] = "Sheila";
 
 	test(text, strlen(text), result);
 
